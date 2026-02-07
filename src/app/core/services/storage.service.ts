@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
+  private tokenKey = 'siph_token';
 
-  constructor() { }
+  saveToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  clearToken() {
+    localStorage.removeItem(this.tokenKey);
+  }
 }

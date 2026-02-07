@@ -99,6 +99,28 @@
   box-shadow: 0 0 0 4px rgba(124,58,237,0.18);
 }
 
+.hint {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.04);
+}
+
+.hint__title {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.75);
+}
+
+.hint__text {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.4;
+}
+
 .err {
   color: rgba(248,113,113,0.95);
   font-size: 12px;
