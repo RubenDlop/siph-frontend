@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
-export type RegisterRole = 'CLIENTE' | 'EXPERTO';
+import { StorageService } from './storage.service';
 
 export interface RegisterPayload {
-  nombre: string;
-  apellido: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  role: RegisterRole;
-  oficio?: string;
-  ciudad?: string;
 }
 
 export interface LoginPayload {
@@ -20,10 +17,8 @@ export interface LoginPayload {
 }
 
 export interface AuthResponse {
-  token?: string;
-  access_token?: string;
-  user?: any;
-  role?: string;
+  access_token: string;
+  token_type: string;
 }
 
 @Injectable({
@@ -33,13 +28,24 @@ export class AuthService {
   // 🔧 Ajusta esto a tu backend real
   private baseUrl = 'http://localhost:8000';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService
+  ) {}
 
   register(payload: RegisterPayload): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, payload);
+    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, payload).pipe(
+      tap((response) => {
+        this.storage.saveToken(response.access_token);
+      })
+    );
   }
 
   login(payload: LoginPayload): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, payload);
+    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, payload).pipe(
+      tap((response) => {
+        this.storage.saveToken(response.access_token);
+      })
+    );
   }
 }

@@ -14,16 +14,16 @@
       <div class="grid">
         <label class="field">
           <span>Nombre</span>
-          <input type="text" formControlName="nombre" placeholder="Ej: Juan" />
-          <small class="err" *ngIf="f.nombre.touched && f.nombre.invalid">
+          <input type="text" formControlName="first_name" placeholder="Ej: Juan" />
+          <small class="err" *ngIf="f.first_name.touched && f.first_name.invalid">
             Ingresa un nombre válido.
           </small>
         </label>
 
         <label class="field">
           <span>Apellido</span>
-          <input type="text" formControlName="apellido" placeholder="Ej: Pérez" />
-          <small class="err" *ngIf="f.apellido.touched && f.apellido.invalid">
+          <input type="text" formControlName="last_name" placeholder="Ej: Pérez" />
+          <small class="err" *ngIf="f.last_name.touched && f.last_name.invalid">
             Ingresa un apellido válido.
           </small>
         </label>
@@ -44,29 +44,12 @@
           </small>
         </label>
 
-        <label class="field">
-          <span>Tipo de cuenta</span>
-          <select formControlName="role" (change)="onRoleChange()">
-            <option value="CLIENTE">Cliente</option>
-            <option value="EXPERTO">Experto</option>
-          </select>
-        </label>
-
-        <label class="field" *ngIf="f.role.value === 'EXPERTO'">
-          <span>Oficio</span>
-          <input type="text" formControlName="oficio" placeholder="Ej: Electricista" />
-          <small class="err" *ngIf="f.oficio.touched && f.oficio.invalid">
-            El oficio es obligatorio para expertos.
-          </small>
-        </label>
-
-        <label class="field" *ngIf="f.role.value === 'EXPERTO'">
-          <span>Ciudad / Barrio</span>
-          <input type="text" formControlName="ciudad" placeholder="Ej: Barranquilla" />
-          <small class="err" *ngIf="f.ciudad.touched && f.ciudad.invalid">
-            La ciudad es obligatoria para expertos.
-          </small>
-        </label>
+        <div class="field full hint">
+          <span class="hint__title">Cuenta de usuario</span>
+          <p class="hint__text">
+            Todos los registros se crean como usuarios. Para solicitar servicios debes iniciar sesión.
+          </p>
+        </div>
       </div>
 
       <div class="alert" *ngIf="errorMsg">

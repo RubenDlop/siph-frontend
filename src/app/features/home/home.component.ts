@@ -36,6 +36,6 @@ export class HomeComponent {
   }
 
   goRequest() {
-    this.router.navigate(['/requests/request-create']);
+    this.router.navigate(['/requests/new']);
   }
 }

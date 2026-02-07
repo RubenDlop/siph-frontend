@@ -9,9 +9,9 @@
     <!-- Desktop links -->
     <nav class="links" aria-label="Navegación principal">
       <a routerLink="/workers" routerLinkActive="isActive">Expertos</a>
-      <a routerLink="/requests/request-create" routerLinkActive="isActive">Solicitar</a>
-      <a routerLink="/requests/my-requests" routerLinkActive="isActive">Mis solicitudes</a>
-      <a routerLink="/reviews/review-list" routerLinkActive="isActive">Reseñas</a>
+      <a routerLink="/requests/new" routerLinkActive="isActive">Solicitar</a>
+      <a routerLink="/my-requests" routerLinkActive="isActive">Mis solicitudes</a>
+      <a routerLink="/reviews" routerLinkActive="isActive">Reseñas</a>
     </nav>
 
     <!-- Actions -->
@@ -29,9 +29,9 @@
   <!-- Mobile menu -->
   <div class="mobile" [class.mobile--open]="menuOpen">
     <a routerLink="/workers" (click)="closeMenu()">Expertos</a>
-    <a routerLink="/requests/request-create" (click)="closeMenu()">Solicitar</a>
-    <a routerLink="/requests/my-requests" (click)="closeMenu()">Mis solicitudes</a>
-    <a routerLink="/reviews/review-list" (click)="closeMenu()">Reseñas</a>
+    <a routerLink="/requests/new" (click)="closeMenu()">Solicitar</a>
+    <a routerLink="/my-requests" (click)="closeMenu()">Mis solicitudes</a>
+    <a routerLink="/reviews" (click)="closeMenu()">Reseñas</a>
 
     <div class="mobile__actions">
       <a class="btn btn--ghost" routerLink="/auth/login" (click)="closeMenu()">Login</a>
