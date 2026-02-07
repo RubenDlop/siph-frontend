@@ -1,1 +1,123 @@
-<p>home works!</p>
+<main class="page">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+
+    <div class="hero__wrap hero__wrap--single">
+      <div class="hero__content">
+        <p class="badge">SIPH • Servicios inmediatos para el hogar</p>
+
+        <h1>
+          Encuentra expertos confiables
+          <span class="accent">en minutos</span>.
+        </h1>
+
+        <p class="sub">
+          Plomería, electricidad, pintura y más. Solicita, haz seguimiento por estado y califica la experiencia.
+        </p>
+
+        <div class="cta">
+          <button class="btn btn--primary" type="button" (click)="goExperts()">Buscar expertos</button>
+          <button class="btn btn--ghost" type="button" (click)="goRequest()">Crear solicitud</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__k">+50</div>
+            <div class="stat__t">perfiles de ejemplo</div>
+          </div>
+          <div class="stat">
+            <div class="stat__k">4 módulos</div>
+            <div class="stat__t">solicitud, expertos, estados, reseñas</div>
+          </div>
+          <div class="stat">
+            <div class="stat__k">UX simple</div>
+            <div class="stat__t">pensado para todos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="section__head">
+      <h2>Servicios populares</h2>
+      <p>Elige una categoría y encuentra expertos disponibles cerca de ti.</p>
+    </div>
+
+    <div class="grid">
+      <article class="tile" *ngFor="let c of categories">
+        <div class="tile__icon">{{ c.emoji }}</div>
+        <div class="tile__body">
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.hint }}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section section--alt">
+    <div class="section__head">
+      <h2>¿Por qué SIPH?</h2>
+      <p>Diseñado para reducir incertidumbre: reputación, comparación y seguimiento.</p>
+    </div>
+
+    <div class="grid grid--2">
+      <article class="feature" *ngFor="let f of features">
+        <div class="feature__icon">{{ f.emoji }}</div>
+        <div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section">
+    <div class="section__head">
+      <h2>Así funciona</h2>
+      <p>Flujo simple: solicitar → asignar → seguimiento → reseña.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__n">1</div>
+        <div class="step__t">Crea tu solicitud</div>
+        <div class="step__d">Describe el problema, ubicación y detalles.</div>
+      </div>
+
+      <div class="step">
+        <div class="step__n">2</div>
+        <div class="step__t">Selecciona un experto</div>
+        <div class="step__d">Compara perfiles y reputación.</div>
+      </div>
+
+      <div class="step">
+        <div class="step__n">3</div>
+        <div class="step__t">Sigue el estado</div>
+        <div class="step__d">Creada → En proceso → Finalizada.</div>
+      </div>
+
+      <div class="step">
+        <div class="step__n">4</div>
+        <div class="step__t">Califica y comenta</div>
+        <div class="step__d">Ayuda a construir confianza en la comunidad.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="final__wrap">
+      <h2>¿Listo para probar el prototipo?</h2>
+      <p>Explora expertos, crea una solicitud y mira el seguimiento por estado.</p>
+      <div class="cta">
+        <a class="btn btn--primary" routerLink="/workers">Explorar expertos</a>
+        <a class="btn btn--ghost" routerLink="/requests/request-create">Crear solicitud</a>
+      </div>
+    </div>
+  </section>
+</main>
