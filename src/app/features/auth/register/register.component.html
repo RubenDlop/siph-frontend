@@ -1,5 +1,4 @@
 <main class="auth">
-<<<<<<< HEAD
   <section class="shell">
     <!-- LADO IZQUIERDO (FONDO + MENSAJE) -->
     <aside class="hero" aria-hidden="true">
@@ -94,73 +93,5 @@
         </div>
       </form>
     </section>
-=======
-  <div class="auth__bg"></div>
-
-  <section class="auth__card">
-    <header class="head">
-      <div class="mark">S</div>
-      <div>
-        <h1>Crear cuenta</h1>
-        <p>Regístrate para solicitar servicios o ofrecer tus servicios como experto.</p>
-      </div>
-    </header>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <div class="grid">
-        <label class="field">
-          <span>Nombre</span>
-          <input type="text" formControlName="first_name" placeholder="Ej: Juan" />
-          <small class="err" *ngIf="f.first_name.touched && f.first_name.invalid">
-            Ingresa un nombre válido.
-          </small>
-        </label>
-
-        <label class="field">
-          <span>Apellido</span>
-          <input type="text" formControlName="last_name" placeholder="Ej: Pérez" />
-          <small class="err" *ngIf="f.last_name.touched && f.last_name.invalid">
-            Ingresa un apellido válido.
-          </small>
-        </label>
-
-        <label class="field full">
-          <span>Email</span>
-          <input type="email" formControlName="email" placeholder="ej: correo@dominio.com" />
-          <small class="err" *ngIf="f.email.touched && f.email.invalid">
-            Ingresa un correo válido.
-          </small>
-        </label>
-
-        <label class="field">
-          <span>Contraseña</span>
-          <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
-          <small class="err" *ngIf="f.password.touched && f.password.invalid">
-            La contraseña debe tener al menos 6 caracteres.
-          </small>
-        </label>
-
-        <div class="field full hint">
-          <span class="hint__title">Cuenta de usuario</span>
-          <p class="hint__text">
-            Todos los registros se crean como usuarios. Para solicitar servicios debes iniciar sesión.
-          </p>
-        </div>
-      </div>
-
-      <div class="alert" *ngIf="errorMsg">
-        {{ errorMsg }}
-      </div>
-
-      <button class="btn btn--primary" type="submit" [disabled]="loading">
-        {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
-      </button>
-
-      <div class="foot">
-        <span>¿Ya tienes cuenta?</span>
-        <a routerLink="/auth/login">Inicia sesión</a>
-      </div>
-    </form>
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
   </section>
 </main>
