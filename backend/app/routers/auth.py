@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+<<<<<<< HEAD
 from pydantic import BaseModel
+=======
+>>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 
 from ..core.database import get_db
 from ..core.security import hash_password, verify_password, create_access_token
 from ..models import User
 from ..schemas.auth import RegisterRequest, LoginRequest, AuthResponse
 
+<<<<<<< HEAD
 # ✅ Google token verification
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -16,10 +20,13 @@ from google.auth.transport import requests as google_requests
 # Asegúrate de tener allí GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
 from ..core.config import GOOGLE_CLIENT_ID
 
+=======
+>>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
+<<<<<<< HEAD
 class GoogleLoginRequest(BaseModel):
     credential: str  # ID token (credential) entregado por Google GIS
 
@@ -32,6 +39,13 @@ def register(payload: RegisterRequest, db: Session = Depends(get_db)) -> AuthRes
             status_code=status.HTTP_409_CONFLICT,
             detail="El correo ya está registrado."
         )
+=======
+@router.post("/register", response_model=AuthResponse)
+def register(payload: RegisterRequest, db: Session = Depends(get_db)) -> AuthResponse:
+    existing = db.query(User).filter(User.email == payload.email).first()
+    if existing:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El correo ya está registrado.")
+>>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 
     user = User(
         first_name=payload.first_name.strip(),
@@ -51,6 +65,7 @@ def register(payload: RegisterRequest, db: Session = Depends(get_db)) -> AuthRes
 @router.post("/login", response_model=AuthResponse)
 def login(payload: LoginRequest, db: Session = Depends(get_db)) -> AuthResponse:
     user = db.query(User).filter(User.email == payload.email.lower()).first()
+<<<<<<< HEAD
 
     if not user or not verify_password(payload.password, user.password_hash):
         raise HTTPException(
@@ -114,5 +129,9 @@ def login_with_google(payload: GoogleLoginRequest, db: Session = Depends(get_db)
         db.commit()
         db.refresh(user)
 
+=======
+    if not user or not verify_password(payload.password, user.password_hash):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas.")
+>>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
     token = create_access_token(user.email)
     return AuthResponse(access_token=token)
