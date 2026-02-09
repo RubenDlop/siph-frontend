@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: siph_db
+    restart: always
+    environment:
+      POSTGRES_DB: siph
+      POSTGRES_USER: siph
+      POSTGRES_PASSWORD: siph
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: siph_api
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+psycopg2://siph:siph@db:5432/siph
+      JWT_SECRET_KEY: change-me
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRATION_MINUTES: 60
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

@@ -1,0 +1,37 @@
+<footer class="footer">
+  <div class="footer__wrap">
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand__mark">S</div>
+      <div class="brand__text">
+        <div class="brand__name">SIPH</div>
+        <div class="brand__tag">Servicios inmediatos para el hogar</div>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <nav class="links" aria-label="Enlaces del sitio">
+      <a routerLink="/workers">Expertos</a>
+      <a routerLink="/requests/new">Solicitar</a>
+      <a routerLink="/my-requests">Mis solicitudes</a>
+      <a routerLink="/reviews">Reseñas</a>
+    </nav>
+
+    <!-- Mini CTA -->
+    <div class="actions">
+      <a class="pill pill--primary" routerLink="/workers">Explorar</a>
+      <a class="pill" routerLink="/requests/new">Crear solicitud</a>
+    </div>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="footer__bottom">
+    <div class="footer__bottomWrap">
+      <span>© {{ year }} SIPH</span>
+      <span class="sep"></span>
+      <span>Prototipo académico</span>
+      <span class="sep"></span>
+      <span class="muted">Hecho con Angular + FastAPI</span>
+    </div>
+  </div>
+</footer>

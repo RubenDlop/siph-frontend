@@ -1,0 +1,97 @@
+<main class="auth">
+  <section class="shell">
+    <!-- LADO IZQUIERDO (FONDO + MENSAJE) -->
+    <aside class="hero" aria-hidden="true">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <h2>Servicios para tu hogar</h2>
+        <p>Encuentra expertos cerca de ti, con reseñas y seguimiento del servicio.</p>
+
+        <ul class="hero__list">
+          <li>✅ Perfiles y calificaciones</li>
+          <li>✅ Solicitudes y estados en tiempo real</li>
+          <li>✅ Contacto rápido con expertos</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- LADO DERECHO (FORM) -->
+    <section class="panel">
+      <header class="panel__head">
+        <h1>Registra tu cuenta</h1>
+        <p>Regístrate para solicitar servicios o ofrecer tus servicios como experto.</p>
+      </header>
+
+      <!-- GOOGLE -->
+      <div class="social">
+        <div id="googleBtn" class="googleBtn"></div>
+        <div class="divider"><span>o</span></div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="grid">
+          <label class="field">
+            <span>Nombre</span>
+            <input type="text" formControlName="first_name" placeholder="Juan" />
+            <small class="err" *ngIf="f.first_name.touched && f.first_name.invalid">
+              Ingresa un nombre válido (mín. 2).
+            </small>
+          </label>
+
+          <label class="field">
+            <span>Apellido</span>
+            <input type="text" formControlName="last_name" placeholder="Pérez" />
+            <small class="err" *ngIf="f.last_name.touched && f.last_name.invalid">
+              Ingresa un apellido válido (mín. 2).
+            </small>
+          </label>
+
+          <label class="field full">
+            <span>Email</span>
+            <input type="email" formControlName="email" placeholder="correo@dominio.com" />
+            <small class="err" *ngIf="f.email.touched && f.email.invalid">
+              Ingresa un correo válido.
+            </small>
+          </label>
+
+          <label class="field full">
+            <span>Contraseña</span>
+            <div class="pass">
+              <input
+                [type]="showPass ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Mínimo 6 caracteres"
+              />
+              <button type="button" class="pass__toggle" (click)="showPass = !showPass">
+                {{ showPass ? 'Ocultar' : 'Ver' }}
+              </button>
+            </div>
+            <small class="err" *ngIf="f.password.touched && f.password.invalid">
+              La contraseña debe tener al menos 6 caracteres.
+            </small>
+          </label>
+
+          <div class="hint full">
+            <div class="hint__title">CUENTA DE USUARIO</div>
+            <p class="hint__text">
+              Todos los registros se crean como usuarios. Para solicitar servicios debes iniciar sesión.
+            </p>
+          </div>
+        </div>
+
+        <div class="alert" *ngIf="errorMsg">
+          {{ errorMsg }}
+        </div>
+
+        <button class="btn" type="submit" [disabled]="loading || form.invalid">
+          {{ loading ? 'Creando...' : 'Crear cuenta' }}
+        </button>
+
+        <div class="foot">
+          <span>¿Ya tienes cuenta?</span>
+          <a routerLink="/auth/login">Entrar</a>
+        </div>
+      </form>
+    </section>
+  </section>
+</main>

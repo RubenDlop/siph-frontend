@@ -1,0 +1,108 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #0b1220;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.nav__wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.92);
+  font-weight: 800;
+}
+
+.brand__mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(37, 99, 235, 0.30);
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.links a {
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  font-weight: 650;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: 0.18s ease;
+}
+
+.links a:hover {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+}
+
+.links a.isActive {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.95);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 750;
+  transition: 0.18s ease;
+  white-space: nowrap;
+}
+
+.btn--ghost {
+  color: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+}
+
+.btn--ghost:hover { background: rgba(255,255,255,0.10); }
+
+.btn--primary {
+  color: #ffffff;
+  background: linear-gradient(90deg, var(--primary), #3b82f6);
+  box-shadow: 0 10px 24px rgba(37,99,235,0.25);
+}
+
+.btn--primary:hover { filter: brightness(1.05); }
+
+.burger { display: none; }
+
+.mobile { display: none; }
+
+@media (max-width: 900px) {
+  .links { display: none; }
+  .burger { display: inline-flex; }
+  .mobile { display: grid; }
+}

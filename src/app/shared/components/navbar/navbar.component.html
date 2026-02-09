@@ -1,0 +1,41 @@
+<header class="nav">
+  <div class="nav__wrap">
+    <!-- Brand -->
+    <a class="brand" routerLink="/" (click)="closeMenu()">
+      <span class="brand__mark">S</span>
+      <span class="brand__text">SIPH</span>
+    </a>
+
+    <!-- Desktop links -->
+    <nav class="links" aria-label="Navegación principal">
+      <a routerLink="/workers" routerLinkActive="isActive">Expertos</a>
+      <a routerLink="/requests/new" routerLinkActive="isActive">Solicitar</a>
+      <a routerLink="/my-requests" routerLinkActive="isActive">Mis solicitudes</a>
+      <a routerLink="/reviews" routerLinkActive="isActive">Reseñas</a>
+    </nav>
+
+    <!-- Actions -->
+    <div class="actions">
+      <a class="btn btn--ghost" routerLink="/auth/login">Login</a>
+      <a class="btn btn--primary" routerLink="/auth/register">Registro</a>
+
+      <!-- Mobile toggle -->
+      <button class="burger" type="button" (click)="toggleMenu()" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile" [class.mobile--open]="menuOpen">
+    <a routerLink="/workers" (click)="closeMenu()">Expertos</a>
+    <a routerLink="/requests/new" (click)="closeMenu()">Solicitar</a>
+    <a routerLink="/my-requests" (click)="closeMenu()">Mis solicitudes</a>
+    <a routerLink="/reviews" (click)="closeMenu()">Reseñas</a>
+
+    <div class="mobile__actions">
+      <a class="btn btn--ghost" routerLink="/auth/login" (click)="closeMenu()">Login</a>
+      <a class="btn btn--primary" routerLink="/auth/register" (click)="closeMenu()">Registro</a>
+    </div>
+  </div>
+</header>
