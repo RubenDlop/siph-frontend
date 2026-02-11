@@ -1,0 +1,1485 @@
+﻿============================
+PROJECT CONTEXT (configs)
+Date: 02/11/2026 11:22:43
+============================
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\package.json
+============================================================
+{
+  "name": "siph-frontend",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:siph-frontend": "node dist/siph-frontend/server/server.mjs"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "19.2.18",
+    "@angular/compiler": "19.2.18",
+    "@angular/core": "19.2.18",
+    "@angular/forms": "19.2.18",
+    "@angular/platform-browser": "19.2.18",
+    "@angular/platform-browser-dynamic": "19.2.18",
+    "@angular/platform-server": "19.2.18",
+    "@angular/router": "19.2.18",
+    "express": "^4.18.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "19.2.19",
+    "@angular/cli": "19.2.19",
+    "@angular/compiler-cli": "19.2.18",
+    "@angular/ssr": "19.2.19",
+    "@types/express": "^4.17.17",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^18.18.0",
+    "autoprefixer": "^10.4.24",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "5.6.3"
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\angular.json
+============================================================
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "siph-frontend": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/siph-frontend",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+  "assets": [
+  {
+    "glob": "**/*",
+    "input": "src/assets",
+    "output": "assets"
+  },
+  {
+    "glob": "**/*",
+    "input": "src/app/features/auth/register/assets",
+    "output": "assets/register"
+  }
+],
+
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "siph-frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "siph-frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "ff2fefc5-8289-467d-a916-c0375faacbaf"
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\tsconfig.json
+============================================================
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022"
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\tsconfig.app.json
+============================================================
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "src/main.ts",
+    "src/main.server.ts",
+    "src/server.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\tsconfig.spec.json
+============================================================
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\postcss.config.js
+============================================================
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\tailwind.config.js
+============================================================
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{html,ts}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\styles.scss
+============================================================
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #0b1220;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\main.ts
+============================================================
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, appConfig)
+  .catch((err) => console.error(err));
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.routes.ts
+============================================================
+import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
+
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./features/home/home.component').then((m) => m.HomeComponent),
+  },
+
+  // âœ… DASHBOARD
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
+  },
+
+  // âœ… AUTH
+  {
+    path: 'auth/login',
+    loadComponent: () =>
+      import('./features/auth/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
+  },
+  {
+    path: 'auth/register',
+    loadComponent: () =>
+      import('./features/auth/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
+  },
+
+  // âœ… Alias
+  { path: 'login', redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
+
+  // âœ… Workers (listado / perfil pÃºblico)
+  {
+    path: 'workers',
+    loadComponent: () =>
+      import('./features/workers/worker-list/worker-list.component').then(
+        (m) => m.WorkerListComponent
+      ),
+  },
+  {
+    path: 'workers/:id',
+    loadComponent: () =>
+      import('./features/workers/worker-profile/worker-profile.component').then(
+        (m) => m.WorkerProfileComponent
+      ),
+  },
+
+  // âœ… Requests
+  {
+    path: 'requests/new',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/requests/request-create/request-create.component').then(
+        (m) => m.RequestCreateComponent
+      ),
+  },
+  {
+    path: 'my-requests',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/requests/my-requests/my-requests.component').then(
+        (m) => m.MyRequestsComponent
+      ),
+  },
+
+  // âœ… Reviews
+  {
+    path: 'reviews',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/reviews/review-list/review-list.component').then(
+        (m) => m.ReviewListComponent
+      ),
+  },
+
+  // âœ… ðŸ‘·â€â™‚ï¸ Solicitud para trabajar como TÃ©cnico (SOLO USER)
+  {
+    path: 'work/apply',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['USER'] },
+    loadComponent: () =>
+      import(
+        './features/worker-applications/apply/worker-apply/worker-apply.component'
+      ).then((m) => m.WorkerApplyComponent),
+  },
+
+  // âœ… ðŸ›¡ï¸ Admin: revisar solicitudes (SOLO ADMIN)
+  {
+    path: 'admin/worker-applications',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN'] },
+    loadComponent: () =>
+      import(
+        './features/worker-applications/admin-list/worker-applications-admin/worker-applications-admin.component'
+      ).then((m) => m.WorkerApplicationsAdminComponent),
+  },
+
+  // âœ… Not Found
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./shared/components/not-found/not-found.component').then(
+        (m) => m.NotFoundComponent
+      ),
+  },
+];
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.config.ts
+============================================================
+// src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { routes } from './app.routes';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor'; // ajusta ruta si cambia
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withInterceptorsFromDi()),
+
+    // âœ… ESTO ES LO QUE TE FALTA
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
+};
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\auth.service.ts
+============================================================
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { StorageService, AuthUser } from './storage.service';
+
+export interface RegisterPayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface GoogleLoginPayload {
+  credential: string;
+}
+
+export interface AuthResponse {
+  access_token: string;
+  token_type?: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private readonly baseUrl = environment.apiUrl || 'http://localhost:8000';
+
+  constructor(private http: HttpClient, private storage: StorageService) {}
+
+  register(payload: RegisterPayload): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.baseUrl}/auth/register`, payload)
+      .pipe(
+        tap((res) => {
+          this.storage.saveToken(res.access_token);
+          // Carga user para navbar/roles
+          this.me().subscribe({ next: () => {}, error: () => {} });
+        })
+      );
+  }
+
+  login(payload: LoginPayload): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, payload).pipe(
+      tap((res) => {
+        this.storage.saveToken(res.access_token);
+        this.me().subscribe({ next: () => {}, error: () => {} });
+      })
+    );
+  }
+
+  loginWithGoogle(credential: string): Observable<AuthResponse> {
+    const payload: GoogleLoginPayload = { credential };
+    return this.http
+      .post<AuthResponse>(`${this.baseUrl}/auth/google`, payload)
+      .pipe(
+        tap((res) => {
+          this.storage.saveToken(res.access_token);
+          this.me().subscribe({ next: () => {}, error: () => {} });
+        })
+      );
+  }
+
+  me(): Observable<AuthUser> {
+    return this.http.get<AuthUser>(`${this.baseUrl}/auth/me`).pipe(
+      tap((user) => {
+        this.storage.saveUser(user);
+      })
+    );
+  }
+
+  logout(): void {
+    this.storage.clearToken();
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\storage.service.ts
+============================================================
+import { Injectable } from '@angular/core';
+
+export interface AuthUser {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  role: string;
+  is_active: boolean;
+  created_at?: string | null;
+}
+
+@Injectable({ providedIn: 'root' })
+export class StorageService {
+  private tokenKey = 'siph_token';
+  private userKey = 'siph_user';
+
+  // TOKEN
+  saveToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  removeToken() {
+    localStorage.removeItem(this.tokenKey);
+  }
+
+  // USER
+  saveUser(user: AuthUser) {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  getUser(): AuthUser | null {
+    const raw = localStorage.getItem(this.userKey);
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw) as AuthUser;
+    } catch {
+      return null;
+    }
+  }
+
+  removeUser() {
+    localStorage.removeItem(this.userKey);
+  }
+
+  // HELPERS
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  clearToken() {
+    this.removeToken();
+    this.removeUser();
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\interceptors\auth.interceptor.ts
+============================================================
+// src/app/core/interceptors/auth.interceptor.ts
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { StorageService } from '../services/storage.service';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private storage: StorageService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.storage.getToken(); // siph_token
+    if (!token) return next.handle(req);
+
+    // Si ya trae Authorization, no lo sobreescribas
+    if (req.headers.has('Authorization')) return next.handle(req);
+
+    return next.handle(
+      req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }, // âœ… espacio correcto
+      })
+    );
+  }
+}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\docker-compose.yml
+============================================================
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: siph_db
+    restart: always
+    environment:
+      POSTGRES_DB: siph
+      POSTGRES_USER: siph
+      POSTGRES_PASSWORD: siph
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: siph_api
+    restart: always
+
+    # âœ… CARGA variables del archivo backend/.env dentro del contenedor
+    env_file:
+      - .env
+
+    environment:
+      DATABASE_URL: postgresql+psycopg2://siph:siph@db:5432/siph
+      JWT_SECRET_KEY: change-me
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRATION_MINUTES: 60
+      GOOGLE_CLIENT_ID: 1026227617402-hts4hu699cuo0gmh5fg8sh8ncjfdvo76.apps.googleusercontent.com
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - db
+
+    # âœ… Mantengo tu bind mount para desarrollo
+    volumes:
+      - .:/app
+    working_dir: /app
+
+volumes:
+  pgdata:
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\Dockerfile
+============================================================
+# backend/Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# (Opcional pero recomendado) dependencias de sistema mÃ­nimas
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app ./app
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host=0.0.0.0", "--port=8000"]
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\main.py
+============================================================
+# backend/app/main.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from .core.database import Base, engine
+
+# âœ… Importa mÃ³dulos de modelos SOLO para registrar tablas (side effects)
+from .models import user  # noqa: F401
+from .models import service_request  # noqa: F401
+from .models import worker_application  # noqa: F401
+from .models import technician_verification  # noqa: F401
+
+from .routers import auth, requests, worker_applications, technician_verification as tech_ver_router
+from .routers import admin_technician_verification
+
+
+app = FastAPI(title="SIPH API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:4200",
+        "http://127.0.0.1:4200",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# âœ… Crea tablas
+Base.metadata.create_all(bind=engine)
+
+# Routers
+app.include_router(auth.router)
+app.include_router(requests.router)
+
+# worker_applications suele tener router y admin_router
+app.include_router(worker_applications.router)
+app.include_router(worker_applications.admin_router)
+
+# verification
+app.include_router(tech_ver_router.router)
+app.include_router(admin_technician_verification.router)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\config.py
+============================================================
+# backend/app/core/config.py
+from pathlib import Path
+from typing import Optional
+
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# âœ… Asegura que el .env se lea SIEMPRE desde backend/.env
+# backend/
+#   .env
+#   app/
+#     core/
+#       config.py
+BASE_DIR = Path(__file__).resolve().parents[2]  # -> backend/
+ENV_FILE = BASE_DIR / ".env"
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=str(ENV_FILE),
+        env_file_encoding="utf-8",
+        extra="ignore",
+        case_sensitive=False,
+    )
+
+    database_url: str = Field(
+        default="postgresql+psycopg2://siph:siph@localhost:5432/siph",
+        validation_alias="DATABASE_URL",
+    )
+
+    jwt_secret_key: str = Field(default="change-me", validation_alias="JWT_SECRET_KEY")
+    jwt_algorithm: str = Field(default="HS256", validation_alias="JWT_ALGORITHM")
+    jwt_expiration_minutes: int = Field(
+        default=60, validation_alias="JWT_EXPIRATION_MINUTES"
+    )
+
+    # âœ… No hardcode: viene del .env / docker env
+    google_client_id: Optional[str] = Field(
+        default=None, validation_alias="GOOGLE_CLIENT_ID"
+    )
+
+
+settings = Settings()
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\database.py
+============================================================
+# backend/app/core/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+from .config import settings
+
+engine = create_engine(settings.database_url, pool_pre_ping=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\deps.py
+============================================================
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from jose import JWTError, jwt
+from sqlalchemy.orm import Session
+
+from .config import settings
+from .database import get_db
+from ..models.user import User
+
+
+security = HTTPBearer()
+
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db),
+) -> User:
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(
+            token,
+            settings.jwt_secret_key,
+            algorithms=[settings.jwt_algorithm],
+        )
+        email: str | None = payload.get("sub")
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token invÃ¡lido.",
+            )
+    except JWTError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token invÃ¡lido.",
+        ) from exc
+
+    user = db.query(User).filter(User.email == email).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Usuario no encontrado.",
+        )
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Usuario inactivo.",
+        )
+    return user
+
+
+# âœ… Helper para proteger endpoints por rol
+def require_roles(*roles: str):
+    allowed = {r.upper() for r in roles}
+
+    def checker(current_user: User = Depends(get_current_user)) -> User:
+        role = (current_user.role or "USER").upper()
+        if role not in allowed:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="No tienes permisos para esta acciÃ³n.",
+            )
+        return current_user
+
+    return checker
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\auth.py
+============================================================
+from datetime import datetime
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+
+from ..core.config import settings
+from ..core.database import get_db
+from ..core.deps import get_current_user
+from ..core.security import create_access_token, hash_password, verify_password
+from ..models import User
+from ..schemas.auth import AuthResponse, LoginRequest, RegisterRequest
+
+router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+class GoogleLoginRequest(BaseModel):
+    credential: str
+
+
+class MeResponse(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    role: str
+    is_active: bool
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+@router.post("/register", response_model=AuthResponse)
+def register(payload: RegisterRequest, db: Session = Depends(get_db)) -> AuthResponse:
+    email = payload.email.strip().lower()
+
+    existing = db.query(User).filter(User.email == email).first()
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="El correo ya estÃ¡ registrado.",
+        )
+
+    user = User(
+        first_name=payload.first_name.strip(),
+        last_name=payload.last_name.strip(),
+        email=email,
+        password_hash=hash_password(payload.password),
+        role="USER",
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_access_token(user.email)
+    return AuthResponse(access_token=token)
+
+
+@router.post("/login", response_model=AuthResponse)
+def login(payload: LoginRequest, db: Session = Depends(get_db)) -> AuthResponse:
+    email = payload.email.strip().lower()
+    user = db.query(User).filter(User.email == email).first()
+
+    if not user or not verify_password(payload.password, user.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciales invÃ¡lidas.",
+        )
+
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Usuario inactivo.",
+        )
+
+    token = create_access_token(user.email)
+    return AuthResponse(access_token=token)
+
+
+@router.post("/google", response_model=AuthResponse)
+def login_with_google(payload: GoogleLoginRequest, db: Session = Depends(get_db)) -> AuthResponse:
+    google_client_id = (settings.google_client_id or "").strip()
+    if not google_client_id:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="GOOGLE_CLIENT_ID no estÃ¡ configurado en el backend.",
+        )
+
+    try:
+        info = id_token.verify_oauth2_token(
+            payload.credential,
+            google_requests.Request(),
+            google_client_id,
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token de Google invÃ¡lido.",
+        ) from exc
+
+    email = (info.get("email") or "").lower().strip()
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Google no devolviÃ³ email.",
+        )
+
+    first_name = (info.get("given_name") or "").strip()
+    last_name = (info.get("family_name") or "").strip()
+    google_sub = info.get("sub")
+
+    user = db.query(User).filter(User.email == email).first()
+
+    if not user:
+        user = User(
+            first_name=first_name or "Usuario",
+            last_name=last_name or "Google",
+            email=email,
+            password_hash=hash_password(f"GOOGLE::{google_sub}"),
+            role="USER",
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Usuario inactivo.",
+        )
+
+    token = create_access_token(user.email)
+    return AuthResponse(access_token=token)
+
+
+@router.get("/me", response_model=MeResponse)
+def me(current_user: User = Depends(get_current_user)) -> MeResponse:
+    return current_user
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\worker_applications.py
+============================================================
+from __future__ import annotations
+
+from datetime import datetime
+from typing import Optional, List
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from ..core.database import get_db
+from ..core.deps import get_current_user, require_roles
+from ..models import WorkerApplication, WorkerApplicationStatus, User
+from ..schemas.worker_application import (
+    WorkerApplicationCreate,
+    WorkerApplicationOut,
+    WorkerApplicationAdminOut,
+    WorkerApplicationDecision,
+)
+
+router = APIRouter(prefix="/worker-applications", tags=["worker-applications"])
+admin_router = APIRouter(prefix="/admin/worker-applications", tags=["admin-worker-applications"])
+
+
+# =========================
+# USER: Crear postulaciÃ³n (HISTÃ“RICO)
+# =========================
+@router.post("", response_model=WorkerApplicationOut, status_code=status.HTTP_201_CREATED)
+def apply_as_worker(
+    payload: WorkerApplicationCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    # Solo usuarios normales pueden postularse (si ya es WORKER, ya fue aprobado)
+    if current_user.role != "USER":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Solo usuarios con rol USER pueden postularse.",
+        )
+
+    # âœ… CAMBIO CLAVE: SIEMPRE crea una nueva solicitud (histÃ³rico)
+    app = WorkerApplication(user_id=current_user.id)
+
+    app.phone = payload.phone
+    app.city = payload.city
+    app.specialty = payload.specialty
+    app.bio = payload.bio
+    app.years_experience = payload.years_experience
+
+    app.status = WorkerApplicationStatus.PENDING.value
+    app.admin_notes = None
+    app.reviewed_by = None
+    app.reviewed_at = None
+    app.touch()
+
+    db.add(app)
+    db.commit()
+    db.refresh(app)
+    return app
+
+
+# =========================
+# USER: Ver MI Ãºltima postulaciÃ³n
+# =========================
+@router.get("/me", response_model=WorkerApplicationOut)
+def my_application(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    app = (
+        db.query(WorkerApplication)
+        .filter(WorkerApplication.user_id == current_user.id)
+        .order_by(WorkerApplication.created_at.desc())  # âœ… ÃšLTIMA
+        .first()
+    )
+    if not app:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No tienes solicitudes.")
+    return app
+
+
+# =========================
+# ADMIN: Listar postulaciones (todas)
+# =========================
+@admin_router.get("", response_model=List[WorkerApplicationAdminOut])
+def admin_list_applications(
+    status_filter: Optional[str] = None,
+    db: Session = Depends(get_db),
+    _: User = Depends(require_roles("ADMIN")),
+):
+    q = db.query(WorkerApplication).order_by(WorkerApplication.created_at.desc())
+
+    if status_filter:
+        try:
+            sf = WorkerApplicationStatus(status_filter)
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="status_filter invÃ¡lido. Usa PENDING, APPROVED o REJECTED.",
+            )
+        q = q.filter(WorkerApplication.status == sf.value)
+
+    return q.all()
+
+
+# =========================
+# ADMIN: Decidir (APPROVE/REJECT)
+# =========================
+@admin_router.patch("/{app_id}", response_model=WorkerApplicationAdminOut)
+def admin_decide_application(
+    app_id: int,
+    decision: WorkerApplicationDecision,
+    db: Session = Depends(get_db),
+    current_admin: User = Depends(require_roles("ADMIN")),
+):
+    app = db.query(WorkerApplication).filter(WorkerApplication.id == app_id).first()
+    if not app:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Solicitud no encontrada.")
+
+    # Validar status
+    try:
+        new_status = WorkerApplicationStatus(decision.status)
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Estado invÃ¡lido. Usa APPROVED o REJECTED.",
+        )
+
+    app.status = new_status.value
+    app.admin_notes = decision.admin_notes
+    app.reviewed_by = current_admin.id
+    app.reviewed_at = datetime.utcnow()
+    app.touch()
+
+    # Si aprueba: subir rol del usuario a WORKER
+    if new_status == WorkerApplicationStatus.APPROVED:
+        user = db.query(User).filter(User.id == app.user_id).first()
+        if user and user.role != "ADMIN":
+            user.role = "WORKER"
+
+    db.commit()
+    db.refresh(app)
+    return app
+
+
+============================================================
+FILE: C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\technician_verification.py
+============================================================
+# backend/app/routers/technician_verification.py
+import json
+import hashlib
+from datetime import datetime, timedelta
+from typing import Optional, Dict, Any
+
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from sqlalchemy.orm import Session
+
+from ..core.database import get_db
+from ..core.deps import get_current_user
+from ..models.user import User
+from ..models.technician_verification import (
+    TechnicianProfile,
+    VerificationCase,
+    VerificationDocument,
+    VerificationAuditLog,
+    TechLevel,
+    TechStatus,
+    DocType,
+)
+from ..schemas.technician_verification import (
+    UpsertProfilePayload,
+    SubmitPayload,
+    VerificationMeResponse,
+    OkResponse,
+    UploadDocResponse,
+)
+
+router = APIRouter(prefix="/tech/verification", tags=["Tech Verification"])
+
+MAX_MB = 5
+ALLOWED_CT = {"application/pdf", "image/png", "image/jpeg"}
+
+
+def _now():
+    return datetime.utcnow()
+
+
+def _sha256_bytes(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def _log(db: Session, case_id: int, actor_id: Optional[int], action: str, detail: Dict[str, Any]):
+    db.add(
+        VerificationAuditLog(
+            case_id=case_id,
+            actor_id=actor_id,
+            action=action,
+            detail=detail,
+            created_at=_now(),
+        )
+    )
+
+
+def _latest_case_db(db: Session, tech_id: int) -> Optional[VerificationCase]:
+    return (
+        db.query(VerificationCase)
+        .filter(VerificationCase.tech_id == tech_id)
+        .order_by(VerificationCase.created_at.desc())
+        .first()
+    )
+
+
+def _me_response(profile: TechnicianProfile, case: Optional[VerificationCase]) -> VerificationMeResponse:
+    if not case:
+        return VerificationMeResponse(
+            techId=profile.id,
+            currentLevel=profile.badge_level.value,
+            status=TechStatus.PENDING.value,
+            verifiedAt=None,
+            expiresAt=None,
+            reason=None,
+        )
+
+    return VerificationMeResponse(
+        techId=profile.id,
+        currentLevel=profile.badge_level.value,
+        status=case.status.value,
+        verifiedAt=case.verified_at.isoformat() if case.verified_at else None,
+        expiresAt=case.expires_at.isoformat() if case.expires_at else None,
+        reason=case.reason,
+    )
+
+
+@router.get("/me", response_model=VerificationMeResponse)
+def me(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    profile = db.query(TechnicianProfile).filter(TechnicianProfile.user_id == user.id).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="AÃºn no has creado tu perfil de tÃ©cnico.")
+
+    case = _latest_case_db(db, profile.id)
+    return _me_response(profile, case)
+
+
+@router.put("/profile", response_model=OkResponse)
+def upsert_profile(
+    payload: UpsertProfilePayload,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    pub = payload.public or {}
+    priv = payload.private or {}
+    tech = payload.technician or {}
+    cons = payload.consents or {}
+
+    required = [
+        ("public.name", pub.get("name")),
+        ("public.city", pub.get("city")),
+        ("private.doc_type", priv.get("doc_type")),
+        ("private.doc_number", priv.get("doc_number")),
+        ("private.phone", priv.get("phone")),
+        ("private.email", priv.get("email")),
+        ("technician.specialty", tech.get("specialty")),
+        ("technician.bio", tech.get("bio")),
+    ]
+    missing = [k for k, v in required if not v]
+    if missing:
+        raise HTTPException(status_code=400, detail=f"Faltan campos: {', '.join(missing)}")
+
+    if not cons.get("terms") or not cons.get("privacy") or not cons.get("sensitive"):
+        raise HTTPException(
+            status_code=400,
+            detail="Debes aceptar TÃ©rminos, Privacidad y autorizar verificaciÃ³n de documentos.",
+        )
+
+    profile = db.query(TechnicianProfile).filter(TechnicianProfile.user_id == user.id).first()
+    if not profile:
+        profile = TechnicianProfile(user_id=user.id)
+
+    profile.public_name = pub["name"]
+    profile.public_photo_url = pub.get("photo_url")
+    profile.city = pub["city"]
+    profile.radius_km = int(pub.get("radius_km") or 5)
+    profile.categories = pub.get("categories") or []
+
+    profile.doc_type = priv["doc_type"]
+    profile.doc_number = priv["doc_number"]
+    profile.phone = priv["phone"]
+    profile.email = priv["email"]
+
+    profile.specialty = tech["specialty"]
+    profile.years_experience = int(tech.get("years_experience") or 0)
+    profile.bio = tech["bio"]
+    profile.activities = tech.get("activities") or []
+    profile.wants_payments = bool(tech.get("wants_payments") or False)
+
+    profile.consent_terms = True
+    profile.consent_privacy = True
+    profile.consent_sensitive = True
+    profile.consent_text_version = str(cons.get("version") or "v1")
+    profile.updated_at = _now()
+
+    db.add(profile)
+    db.commit()
+    db.refresh(profile)
+
+    case = _latest_case_db(db, profile.id)
+    if case:
+        _log(db, case.id, user.id, "UPSERT_PROFILE", {"categories": profile.categories, "activities": profile.activities})
+        db.commit()
+
+    return OkResponse(ok=True)
+
+
+@router.post("/documents", response_model=UploadDocResponse)
+def upload_document(
+    docType: str = Form(...),
+    consent: str = Form(...),
+    file: UploadFile = File(...),
+    extra: Optional[str] = Form(None),
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    if str(consent).lower() != "true":
+        raise HTTPException(status_code=400, detail="Debes autorizar el uso del documento solo para verificaciÃ³n.")
+
+    if file.content_type not in ALLOWED_CT:
+        raise HTTPException(status_code=400, detail="Formato no vÃ¡lido (solo PDF/PNG/JPG).")
+
+    data = file.file.read()
+    if len(data) > MAX_MB * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Archivo >5 MB")
+
+    profile = db.query(TechnicianProfile).filter(TechnicianProfile.user_id == user.id).first()
+    if not profile:
+        raise HTTPException(status_code=400, detail="Primero completa tu perfil.")
+
+    # âœ… Draft PENDING para guardar docs
+    case = _latest_case_db(db, profile.id)
+    if not case or case.status != TechStatus.PENDING:
+        case = VerificationCase(
+            tech_id=profile.id,
+            target_level=TechLevel.BASIC,
+            status=TechStatus.PENDING,
+            created_at=_now(),
+            updated_at=_now(),
+        )
+        db.add(case)
+        db.commit()
+        db.refresh(case)
+
+    extra_obj = {}
+    if extra:
+        try:
+            extra_obj = json.loads(extra)
+        except Exception:
+            raise HTTPException(status_code=400, detail="Extra invÃ¡lido (JSON).")
+
+    try:
+        dt = DocType(docType)
+    except Exception:
+        raise HTTPException(status_code=400, detail="docType no vÃ¡lido")
+
+    doc = VerificationDocument(
+        case_id=case.id,
+        doc_type=dt,
+        content_type=file.content_type,
+        original_filename=file.filename,
+        size_bytes=len(data),
+        sha256=_sha256_bytes(data),
+        meta=extra_obj or {},
+        received_at=_now(),
+    )
+
+    # MinimizaciÃ³n
+    if dt == DocType.ID_PHOTO:
+        doc.storage_ref = f"encrypted://private/case-{case.id}/id-photo-{doc.sha256}.bin"
+        doc.retained_until = _now() + timedelta(days=30)
+    else:
+        doc.storage_ref = None
+        doc.retained_until = None
+
+    db.add(doc)
+    _log(db, case.id, user.id, "UPLOAD_DOC", {"docType": dt.value, "size": len(data), "minimized": dt != DocType.ID_PHOTO})
+    db.commit()
+    db.refresh(doc)
+
+    return UploadDocResponse(ok=True, docType=dt.value, receivedAt=doc.received_at.isoformat())
+
+
+@router.post("/submit", response_model=VerificationMeResponse)
+def submit_for_verification(
+    payload: SubmitPayload,
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    profile = db.query(TechnicianProfile).filter(TechnicianProfile.user_id == user.id).first()
+    if not profile:
+        raise HTTPException(status_code=400, detail="Primero completa tu perfil.")
+
+    last = _latest_case_db(db, profile.id)
+
+    # âœ… Reutiliza draft PENDING (donde estÃ¡n los docs) -> IN_REVIEW
+    if last and last.status == TechStatus.PENDING:
+        case = last
+        case.target_level = TechLevel(payload.targetLevel)
+        case.status = TechStatus.IN_REVIEW
+        case.updated_at = _now()
+    else:
+        case = VerificationCase(
+            tech_id=profile.id,
+            target_level=TechLevel(payload.targetLevel),
+            status=TechStatus.IN_REVIEW,
+            created_at=_now(),
+            updated_at=_now(),
+        )
+        db.add(case)
+        db.flush()
+
+    _log(db, case.id, user.id, "SUBMIT", {"targetLevel": payload.targetLevel, "extra": payload.extra or {}})
+
+    months = 12
+    if payload.targetLevel == "TRUST":
+        months = 6
+
+    case.expires_at = _now() + timedelta(days=30 * months)
+    case.updated_at = _now()
+
+    db.commit()
+    db.refresh(case)
+
+    return _me_response(profile, case)
+

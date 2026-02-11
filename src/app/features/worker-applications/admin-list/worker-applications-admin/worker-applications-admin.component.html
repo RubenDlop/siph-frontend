@@ -1,0 +1,34 @@
+<app-admin-shell>
+  <app-admin-hero-header [loading]="loading" (refresh)="load()"></app-admin-hero-header>
+
+  <app-admin-alerts [errorMsg]="errorMsg" [toastMsg]="toastMsg"></app-admin-alerts>
+
+  <app-admin-kpis [counts]="counts"></app-admin-kpis>
+
+  <app-admin-toolbar
+    [(statusFilter)]="statusFilter"
+    [(searchTerm)]="searchTerm"
+    [(sortKey)]="sortKey"
+    [sortDir]="sortDir"
+    (toggleSortDir)="toggleSortDir()"
+    [selectedCount]="selectedCount"
+    [bulkBusy]="bulkBusy"
+    [loading]="loading"
+    (bulkDecide)="bulkDecide($event)"
+    (clearSelection)="clearSelection()"
+    (clearSearch)="clearSearch()"
+  ></app-admin-toolbar>
+
+  <app-admin-apps-table
+    [viewApps]="viewApps"
+    [loading]="loading"
+    [notesById]="notesById"
+    [busyById]="busyById"
+    [selectedIds]="selectedIds"
+    (toggleSelect)="onToggleSelect($event)"
+    (toggleSelectAll)="onToggleSelectAll($event)"
+    (openDetail)="goDetail($event)"
+    (decide)="decide($event.app, $event.decision)"
+    (copyEmail)="copyEmail($event)"
+  ></app-admin-apps-table>
+</app-admin-shell>

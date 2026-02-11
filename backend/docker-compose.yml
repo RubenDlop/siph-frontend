@@ -18,15 +18,28 @@ services:
     build: .
     container_name: siph_api
     restart: always
+
+    # ✅ CARGA variables del archivo backend/.env dentro del contenedor
+    env_file:
+      - .env
+
     environment:
       DATABASE_URL: postgresql+psycopg2://siph:siph@db:5432/siph
       JWT_SECRET_KEY: change-me
       JWT_ALGORITHM: HS256
       JWT_EXPIRATION_MINUTES: 60
+      GOOGLE_CLIENT_ID: 1026227617402-hts4hu699cuo0gmh5fg8sh8ncjfdvo76.apps.googleusercontent.com
+
     ports:
       - "8000:8000"
+
     depends_on:
       - db
+
+    # ✅ Mantengo tu bind mount para desarrollo
+    volumes:
+      - .:/app
+    working_dir: /app
 
 volumes:
   pgdata:

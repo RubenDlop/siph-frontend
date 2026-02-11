@@ -1,1 +1,165 @@
-<p>dashboard works!</p>
+<main class="dash">
+  <section class="wrap">
+    <header class="head hero">
+      <div class="head__left">
+        <div class="badge">Dashboard</div>
+        <h1>
+          Hola, <span class="accent">{{ greetingName }}</span> 👋
+        </h1>
+        <p>Gestiona tus solicitudes, mira expertos y revisa tu actividad en SIPH.</p>
+      </div>
+
+      <div class="head__right">
+        <button class="btn btn--ghost" type="button" (click)="loadDashboard()" [disabled]="loading">
+          {{ loading ? 'Actualizando…' : 'Actualizar' }}
+        </button>
+
+        <button class="btn btn--primary" type="button" (click)="go('/requests/new')">
+          + Nueva solicitud
+        </button>
+      </div>
+    </header>
+
+    <div class="alert" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+    <section class="kpis" *ngIf="!loading; else skel">
+      <article class="kpi" *ngFor="let k of kpis">
+        <div class="kpi__icon" aria-hidden="true">{{ k.icon }}</div>
+        <div class="kpi__meta">
+          <div class="kpi__label">{{ k.label }}</div>
+          <div class="kpi__value">{{ k.value }}</div>
+          <div class="kpi__hint" *ngIf="k.hint">{{ k.hint }}</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid grid--dashboard" *ngIf="!loading; else skel">
+      <article class="card card--actions">
+        <div class="card__top">
+          <h2>Acciones rápidas</h2>
+          <span class="chip">Recomendado</span>
+        </div>
+
+        <div class="actions">
+          <button class="action" type="button" (click)="go('/workers')">
+            <div class="action__icon" aria-hidden="true">🧑‍🔧</div>
+            <div class="action__text">
+              <div class="action__title">Buscar expertos</div>
+              <div class="action__sub">Ver perfiles y reseñas</div>
+            </div>
+          </button>
+
+          <button class="action" type="button" (click)="go('/my-requests')">
+            <div class="action__icon" aria-hidden="true">📌</div>
+            <div class="action__text">
+              <div class="action__title">Mis solicitudes</div>
+              <div class="action__sub">Estados y seguimiento</div>
+            </div>
+          </button>
+
+          <button class="action" type="button" (click)="go('/reviews')">
+            <div class="action__icon" aria-hidden="true">⭐</div>
+            <div class="action__text">
+              <div class="action__title">Reseñas</div>
+              <div class="action__sub">Confianza y reputación</div>
+            </div>
+          </button>
+        </div>
+
+        <div class="tip">
+          <div class="tip__title">Tip</div>
+          <div class="tip__text">
+            Mientras más clara sea tu solicitud (detalle + fotos + ubicación), más rápido recibes ayuda.
+          </div>
+        </div>
+      </article>
+
+      <article class="card card--requests">
+        <div class="card__top">
+          <h2>Solicitudes recientes</h2>
+          <a class="link" routerLink="/my-requests">Ver todo</a>
+        </div>
+
+        <div class="empty" *ngIf="recentRequests.length === 0">
+          <div class="empty__icon" aria-hidden="true">📝</div>
+          <div class="empty__title">Aún no tienes solicitudes</div>
+          <div class="empty__sub">Crea tu primera solicitud para empezar.</div>
+          <button class="btn btn--primary" type="button" (click)="go('/requests/new')">Crear solicitud</button>
+        </div>
+
+        <div class="list" *ngIf="recentRequests.length > 0">
+          <div class="row" *ngFor="let r of recentRequests" [ngClass]="statusTone(r.status)">
+            <div class="row__main">
+              <div class="row__title">{{ r.title }}</div>
+              <div class="row__sub">{{ r.description || 'Sin descripción' }}</div>
+            </div>
+
+            <div class="row__side">
+              <span class="pill" [ngClass]="statusTone(r.status)">
+                {{ statusLabel(r.status) }}
+              </span>
+
+              <button class="mini" type="button" (click)="go('/my-requests')">Ver</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card card--workers">
+        <div class="card__top">
+          <h2>Expertos sugeridos</h2>
+          <a class="link" routerLink="/workers">Explorar</a>
+        </div>
+
+        <div class="empty" *ngIf="topWorkers.length === 0">
+          <div class="empty__icon" aria-hidden="true">🧰</div>
+          <div class="empty__title">Sin expertos para mostrar</div>
+          <div class="empty__sub">Cuando conectes el backend, aquí verás sugerencias.</div>
+        </div>
+
+        <div class="workers" *ngIf="topWorkers.length > 0">
+          <div class="wcard" *ngFor="let w of topWorkers">
+            <div class="wcard__avatar" [style.backgroundImage]="'url(' + (w.avatar_url || '') + ')'">
+              <span *ngIf="!w.avatar_url">{{ (w.first_name || 'E')[0] }}</span>
+            </div>
+
+            <div class="wcard__meta">
+              <div class="wcard__name">{{ w.first_name }} {{ w.last_name }}</div>
+              <div class="wcard__sub">{{ w.oficio }} • {{ w.city }}</div>
+
+              <div class="wcard__rate">
+                <span class="star" aria-hidden="true">★</span>
+                <span class="num">{{ w.rating ? (w.rating | number:'1.0-1') : '—' }}</span>
+                <span class="muted">({{ w.jobs_done || 0 }} trabajos)</span>
+              </div>
+            </div>
+
+            <button class="mini" type="button" (click)="goWorker(w)">Ver</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="foot">
+      <span>© {{ year }} SIPH • Dashboard</span>
+      <span class="dot">•</span>
+      <span class="muted">Rol: {{ role }}</span>
+    </footer>
+
+    <ng-template #skel>
+      <section class="kpis">
+        <article class="kpi sk" *ngFor="let i of [1,2,3,4]">
+          <div class="sk__a"></div>
+          <div class="sk__b"></div>
+          <div class="sk__c"></div>
+        </article>
+      </section>
+
+      <section class="grid grid--dashboard">
+        <article class="card sk" style="min-height: 330px"></article>
+        <article class="card sk" style="min-height: 330px"></article>
+        <article class="card sk" style="min-height: 330px"></article>
+      </section>
+    </ng-template>
+  </section>
+</main>

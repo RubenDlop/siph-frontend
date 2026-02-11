@@ -1,3 +1,4 @@
+# backend/app/models/user.py
 from sqlalchemy import Column, Integer, String, DateTime, func, Boolean
 
 from ..core.database import Base

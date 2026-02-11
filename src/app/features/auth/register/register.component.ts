@@ -1,5 +1,11 @@
-<<<<<<< HEAD
-import { Component, inject, AfterViewInit, PLATFORM_ID } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  PLATFORM_ID,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,48 +14,38 @@ import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment';
 
 declare global {
-  interface Window { google?: any; }
+  interface Window {
+    google?: any;
+  }
 }
-=======
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-
-// Ajusta el import si tu ruta es distinta:
-import { AuthService } from '../../../core/services/auth.service';
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss',
+  styleUrls: ['./register.component.scss'],
 })
-<<<<<<< HEAD
 export class RegisterComponent implements AfterViewInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private auth = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
 
-  loading = false;
-  errorMsg = '';
-  showPass = false;
-=======
-export class RegisterComponent {
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private auth = inject(AuthService);
+  // ✅ En tu HTML debe existir: <div #gsiBtn class="gsiBtn"></div>
+  @ViewChild('gsiBtn', { static: false }) gsiBtn?: ElementRef<HTMLDivElement>;
+
+  // ✅ OJO: esta ruta debe existir en src/assets/
+  heroImg = 'assets/pexels-photo-259588-M3k_H4KE.jpeg';
 
   loading = false;
   errorMsg = '';
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
+  showPass = false;
+
+  // ✅ Google GSI
+  googleReady = false;
+  private googleClientId = '';
+  private googleBtnRendered = false;
 
   form = this.fb.group({
     first_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -58,41 +54,125 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-<<<<<<< HEAD
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   ngAfterViewInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    // Espera corta por si el script aún no terminó de cargar
-    setTimeout(() => this.initGoogleButton(), 0);
+    this.initGoogle();
   }
 
-  private initGoogleButton() {
-    const google = window.google;
-    const el = document.getElementById('googleBtn');
+  private getClientId(): string {
+    return (
+      (environment as any).googleClientId ||
+      (environment as any).google_client_id ||
+      (environment as any).GOOGLE_CLIENT_ID ||
+      ''
+    );
+  }
 
-    if (!el || !google?.accounts?.id) return;
-    if (!environment.googleClientId) return;
+  private async initGoogle() {
+    const clientId = this.getClientId();
+    if (!clientId) return;
+
+    this.googleClientId = clientId;
+
+    try {
+      await this.loadGoogleScript();
+    } catch {
+      return;
+    }
+
+    const google = window.google;
+    if (!google?.accounts?.id) return;
 
     google.accounts.id.initialize({
-      client_id: environment.googleClientId,
+      client_id: this.googleClientId,
       callback: (resp: any) => this.onGoogleCredential(resp),
+      ux_mode: 'popup',
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      // ✅ ayuda con cambios de FedCM (Chrome)
+      use_fedcm_for_prompt: true,
     });
 
-    // Botón oficial (cumple guidelines)
-    google.accounts.id.renderButton(el, {
-      theme: 'outline',
-      size: 'large',
-      text: 'continue_with',
-      shape: 'rectangular',
-      width: 380,
-      locale: 'es',
+    this.googleReady = true;
+
+    // ✅ recomendado: usar botón oficial (más estable que prompt)
+    this.renderGoogleButton();
+  }
+
+  private renderGoogleButton() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.googleReady) return;
+    if (!this.gsiBtn?.nativeElement) return;
+    if (this.googleBtnRendered) return;
+
+    const google = window.google;
+    if (!google?.accounts?.id?.renderButton) return;
+
+    try {
+      // limpia por si Angular re-renderiza
+      this.gsiBtn.nativeElement.innerHTML = '';
+
+      google.accounts.id.renderButton(this.gsiBtn.nativeElement, {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+        shape: 'pill',
+        width: 320, // si quieres 100% hazlo por CSS del contenedor
+        locale: 'es',
+      });
+
+      this.googleBtnRendered = true;
+    } catch {
+      // silent
+    }
+  }
+
+  private loadGoogleScript(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const id = 'google-gsi';
+      if (document.getElementById(id)) {
+        resolve();
+        return;
+      }
+
+      const s = document.createElement('script');
+      s.id = id;
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.async = true;
+      s.defer = true;
+      s.onload = () => resolve();
+      s.onerror = () => reject();
+      document.head.appendChild(s);
+    });
+  }
+
+  // ✅ Fallback (si quieres un botón custom que dispare prompt())
+  signInWithGoogle() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    if (!this.googleReady || !window.google?.accounts?.id) {
+      this.errorMsg = 'Google no está listo todavía. Recarga la página e intenta de nuevo.';
+      return;
+    }
+
+    this.errorMsg = '';
+
+    window.google.accounts.id.prompt((notification: any) => {
+      if (notification?.isNotDisplayed?.() || notification?.isSkippedMoment?.()) {
+        this.errorMsg =
+          'No se pudo abrir Google aquí (bloqueo del navegador, cookies o FedCM). Intenta otro navegador o usa email/contraseña.';
+      }
     });
   }
 
   private onGoogleCredential(resp: any) {
     const credential = resp?.credential;
+
     if (!credential) {
       this.errorMsg = 'No se pudo obtener el token de Google. Intenta nuevamente.';
       return;
@@ -101,10 +181,13 @@ export class RegisterComponent {
     this.loading = true;
     this.errorMsg = '';
 
+    // ✅ Debe existir en tu AuthService
+    // loginWithGoogle(credential: string) => POST /auth/google
     this.auth.loginWithGoogle(credential).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/']);
+        // ✅ manda al dashboard (no a "/")
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err: any) => {
         this.loading = false;
@@ -115,10 +198,6 @@ export class RegisterComponent {
           'No se pudo iniciar con Google. Intenta de nuevo.';
       },
     });
-=======
-  get f() {
-    return this.form.controls;
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
   }
 
   submit() {
@@ -138,22 +217,18 @@ export class RegisterComponent {
       password: this.f.password.value!,
     };
 
-<<<<<<< HEAD
-=======
-    // ⚠️ Si tu AuthService usa otro nombre (ej: registerUser), cámbialo aquí.
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
+    // ✅ Debe existir en tu AuthService
+    // register(payload) => POST /auth/register
     this.auth.register(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/']);
+        // ✅ manda al dashboard (no a "/")
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err: any) => {
         this.loading = false;
         this.errorMsg =
-<<<<<<< HEAD
           err?.error?.detail ||
-=======
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
           err?.error?.message ||
           err?.message ||
           'No se pudo crear la cuenta. Verifica los datos e intenta de nuevo.';

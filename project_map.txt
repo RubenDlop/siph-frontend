@@ -1,0 +1,400 @@
+﻿============================
+PROJECT MAP (structure only)
+Date: 02/11/2026 11:22:43
+============================
+
+===== TREE: src =====
+Listado de rutas de carpetas para el volumen Windows
+El n·mero de serie del volumen es CAC4-6E28
+C:\USERS\RDARI\DOWNLOADS\SIPH-FRONTEND-MASTER\SIPH-FRONTEND-MASTER\SRC
+|   index.html
+|   main.server.ts
+|   main.ts
+|   server.ts
+|   styles.scss
+|   
++---app
+|   |   app.component.html
+|   |   app.component.scss
+|   |   app.component.spec.ts
+|   |   app.component.ts
+|   |   app.config.server.ts
+|   |   app.config.ts
+|   |   app.routes.server.ts
+|   |   app.routes.ts
+|   |   
+|   +---core
+|   |   +---guards
+|   |   |       auth.guard.spec.ts
+|   |   |       auth.guard.ts
+|   |   |       role.guard.spec.ts
+|   |   |       role.guard.ts
+|   |   |       
+|   |   +---interceptors
+|   |   |       auth.interceptor.spec.ts
+|   |   |       auth.interceptor.ts
+|   |   |       
+|   |   +---models
+|   |   |       auth-response.ts
+|   |   |       review.ts
+|   |   |       service-request.ts
+|   |   |       user.ts
+|   |   |       worker.ts
+|   |   |       
+|   |   \---services
+|   |           api.service.spec.ts
+|   |           api.service.ts
+|   |           auth.service.spec.ts
+|   |           auth.service.ts
+|   |           requests.service.spec.ts
+|   |           requests.service.ts
+|   |           reviews.service.spec.ts
+|   |           reviews.service.ts
+|   |           storage.service.spec.ts
+|   |           storage.service.ts
+|   |           tech-verification.service.ts
+|   |           worker-application.service.ts
+|   |           workers.service.spec.ts
+|   |           workers.service.ts
+|   |           
+|   +---features
+|   |   +---auth
+|   |   |   +---login
+|   |   |   |       login.component.html
+|   |   |   |       login.component.scss
+|   |   |   |       login.component.spec.ts
+|   |   |   |       login.component.ts
+|   |   |   |       
+|   |   |   \---register
+|   |   |           register.component.html
+|   |   |           register.component.scss
+|   |   |           register.component.spec.ts
+|   |   |           register.component.ts
+|   |   |           
+|   |   +---dashboard
+|   |   |       dashboard.component.html
+|   |   |       dashboard.component.scss
+|   |   |       dashboard.component.spec.ts
+|   |   |       dashboard.component.ts
+|   |   |       
+|   |   +---home
+|   |   |       home.component.html
+|   |   |       home.component.scss
+|   |   |       home.component.spec.ts
+|   |   |       home.component.ts
+|   |   |       
+|   |   +---requests
+|   |   |   +---my-requests
+|   |   |   |       my-requests.component.html
+|   |   |   |       my-requests.component.scss
+|   |   |   |       my-requests.component.spec.ts
+|   |   |   |       my-requests.component.ts
+|   |   |   |       
+|   |   |   +---request-create
+|   |   |   |       request-create.component.html
+|   |   |   |       request-create.component.scss
+|   |   |   |       request-create.component.spec.ts
+|   |   |   |       request-create.component.ts
+|   |   |   |       
+|   |   |   \---request-status-badge
+|   |   |           request-status-badge.component.html
+|   |   |           request-status-badge.component.scss
+|   |   |           request-status-badge.component.spec.ts
+|   |   |           request-status-badge.component.ts
+|   |   |           
+|   |   +---reviews
+|   |   |   +---review-create
+|   |   |   |       review-create.component.html
+|   |   |   |       review-create.component.scss
+|   |   |   |       review-create.component.spec.ts
+|   |   |   |       review-create.component.ts
+|   |   |   |       
+|   |   |   \---review-list
+|   |   |           review-list.component.html
+|   |   |           review-list.component.scss
+|   |   |           review-list.component.spec.ts
+|   |   |           review-list.component.ts
+|   |   |           
+|   |   +---worker-applications
+|   |   |   +---admin-list
+|   |   |   |   \---worker-applications-admin
+|   |   |   |           worker-applications-admin.component.html
+|   |   |   |           worker-applications-admin.component.scss
+|   |   |   |           worker-applications-admin.component.ts
+|   |   |   |           
+|   |   |   \---apply
+|   |   |       \---worker-apply
+|   |   |               worker-apply.component.html
+|   |   |               worker-apply.component.scss
+|   |   |               worker-apply.component.ts
+|   |   |               
+|   |   \---workers
+|   |       +---worker-card
+|   |       |       worker-card.component.html
+|   |       |       worker-card.component.scss
+|   |       |       worker-card.component.spec.ts
+|   |       |       worker-card.component.ts
+|   |       |       
+|   |       +---worker-list
+|   |       |       worker-list.component.html
+|   |       |       worker-list.component.scss
+|   |       |       worker-list.component.ts
+|   |       |       
+|   |       +---worker-profile
+|   |       |       worker-profile.component.html
+|   |       |       worker-profile.component.scss
+|   |       |       worker-profile.component.spec.ts
+|   |       |       worker-profile.component.ts
+|   |       |       
+|   |       \---worker-requests
+|   |               worker-requests.component.html
+|   |               worker-requests.component.scss
+|   |               worker-requests.component.spec.ts
+|   |               worker-requests.component.ts
+|   |               
+|   \---shared
+|       \---components
+|           +---confirm-dialog
+|           |       confirm-dialog.component.html
+|           |       confirm-dialog.component.scss
+|           |       confirm-dialog.component.spec.ts
+|           |       confirm-dialog.component.ts
+|           |       
+|           +---footer
+|           |       footer.component.html
+|           |       footer.component.scss
+|           |       footer.component.spec.ts
+|           |       footer.component.ts
+|           |       
+|           +---loading
+|           |       loading.component.html
+|           |       loading.component.scss
+|           |       loading.component.spec.ts
+|           |       loading.component.ts
+|           |       
+|           +---navbar
+|           |       navbar.component.html
+|           |       navbar.component.scss
+|           |       navbar.component.spec.ts
+|           |       navbar.component.ts
+|           |       
+|           \---not-found
+|                   not-found.component.html
+|                   not-found.component.scss
+|                   not-found.component.spec.ts
+|                   not-found.component.ts
+|                   
++---assets
+|       pexels-photo-259588-M3k_H4KE.jpeg
+|       pexels-photo-3990359-B-SFyF71.jpeg
+|       pexels-photo-4246094-BKG0ojcO.jpeg
+|       pexels-photo-4792511-CbWbjtI0.jpeg
+|       siph_carousel_1.png
+|       siph_carousel_2.png
+|       siph_carousel_3.png
+|       siph_carousel_4.png
+|       
+\---environments
+        environment.ts
+        
+
+===== TREE: backend =====
+Listado de rutas de carpetas para el volumen Windows
+El n·mero de serie del volumen es CAC4-6E28
+C:\USERS\RDARI\DOWNLOADS\SIPH-FRONTEND-MASTER\SIPH-FRONTEND-MASTER\BACKEND
+|   %OUT%
+|   .env
+|   docker-compose.yml
+|   Dockerfile
+|   project_dump_code_only.txt
+|   requirements.txt
+|   
+\---app
+    |   main.py
+    |   
+    +---core
+    |   |   config.py
+    |   |   database.py
+    |   |   deps.py
+    |   |   roles.py
+    |   |   security.py
+    |   |   
+    |   \---__pycache__
+    |           config.cpython-311.pyc
+    |           config.cpython-312.pyc
+    |           database.cpython-311.pyc
+    |           database.cpython-312.pyc
+    |           deps.cpython-311.pyc
+    |           roles.cpython-311.pyc
+    |           security.cpython-311.pyc
+    |           
+    +---models
+    |   |   service_request.py
+    |   |   technician_verification.py
+    |   |   user.py
+    |   |   worker_application.py
+    |   |   __init__.py
+    |   |   
+    |   \---__pycache__
+    |           service_request.cpython-311.pyc
+    |           technician_verification.cpython-311.pyc
+    |           user.cpython-311.pyc
+    |           worker_application.cpython-311.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---routers
+    |   |   admin_technician_verification.py
+    |   |   admin_worker_applications.py
+    |   |   auth.py
+    |   |   requests.py
+    |   |   technician_verification.py
+    |   |   worker_applications.py
+    |   |   __init__.py
+    |   |   
+    |   \---__pycache__
+    |           admin_technician_verification.cpython-311.pyc
+    |           auth.cpython-311.pyc
+    |           requests.cpython-311.pyc
+    |           technician_verification.cpython-311.pyc
+    |           worker_applications.cpython-311.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    +---schemas
+    |   |   auth.py
+    |   |   request.py
+    |   |   technician_verification.py
+    |   |   user.py
+    |   |   worker_application.py
+    |   |   
+    |   \---__pycache__
+    |           auth.cpython-311.pyc
+    |           request.cpython-311.pyc
+    |           technician_verification.cpython-311.pyc
+    |           user.cpython-311.pyc
+    |           worker_application.cpython-311.pyc
+    |           
+    +---scripts
+    |   |   create_admin.py
+    |   |   __init__.py
+    |   |   
+    |   \---__pycache__
+    |           create_admin.cpython-311.pyc
+    |           create_admin.cpython-312.pyc
+    |           __init__.cpython-311.pyc
+    |           
+    \---__pycache__
+            main.cpython-311.pyc
+            
+
+===== FILE LIST (filtered) =====
+
+--- Frontend files (no component.scss, no spec) ---
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\index.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\main.server.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\main.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\server.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\styles.scss
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.config.server.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.config.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.routes.server.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\app.routes.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\guards\auth.guard.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\guards\role.guard.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\interceptors\auth.interceptor.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\models\auth-response.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\models\review.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\models\service-request.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\models\user.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\models\worker.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\api.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\auth.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\requests.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\reviews.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\storage.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\tech-verification.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\worker-application.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\core\services\workers.service.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\auth\login\login.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\auth\login\login.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\auth\register\register.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\auth\register\register.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\dashboard\dashboard.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\dashboard\dashboard.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\home\home.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\home\home.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\my-requests\my-requests.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\my-requests\my-requests.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\request-create\request-create.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\request-create\request-create.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\request-status-badge\request-status-badge.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\requests\request-status-badge\request-status-badge.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\reviews\review-create\review-create.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\reviews\review-create\review-create.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\reviews\review-list\review-list.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\reviews\review-list\review-list.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\worker-applications\admin-list\worker-applications-admin\worker-applications-admin.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\worker-applications\admin-list\worker-applications-admin\worker-applications-admin.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\worker-applications\apply\worker-apply\worker-apply.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\worker-applications\apply\worker-apply\worker-apply.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-card\worker-card.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-card\worker-card.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-list\worker-list.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-list\worker-list.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-profile\worker-profile.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-profile\worker-profile.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-requests\worker-requests.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\features\workers\worker-requests\worker-requests.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\confirm-dialog\confirm-dialog.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\confirm-dialog\confirm-dialog.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\footer\footer.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\footer\footer.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\loading\loading.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\loading\loading.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\navbar\navbar.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\navbar\navbar.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\not-found\not-found.component.html
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\app\shared\components\not-found\not-found.component.ts
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\pexels-photo-259588-M3k_H4KE.jpeg
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\pexels-photo-3990359-B-SFyF71.jpeg
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\pexels-photo-4246094-BKG0ojcO.jpeg
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\pexels-photo-4792511-CbWbjtI0.jpeg
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\siph_carousel_1.png
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\siph_carousel_2.png
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\siph_carousel_3.png
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\assets\siph_carousel_4.png
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\src\environments\environment.ts
+
+--- Backend files ---
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\%OUT%
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\.env
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\docker-compose.yml
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\Dockerfile
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\project_dump_code_only.txt
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\requirements.txt
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\main.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\config.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\database.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\deps.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\roles.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\core\security.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\models\service_request.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\models\technician_verification.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\models\user.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\models\worker_application.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\models\__init__.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\admin_technician_verification.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\admin_worker_applications.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\auth.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\requests.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\technician_verification.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\worker_applications.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\routers\__init__.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\schemas\auth.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\schemas\request.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\schemas\technician_verification.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\schemas\user.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\schemas\worker_application.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\scripts\create_admin.py
+C:\Users\rdari\Downloads\siph-frontend-master\siph-frontend-master\backend\app\scripts\__init__.py

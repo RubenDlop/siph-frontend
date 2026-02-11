@@ -1,0 +1,127 @@
+<div
+  class="mt-4 rounded-2xl border border-[rgba(15,23,42,0.10)]
+         bg-white/70 p-4 backdrop-blur-xl shadow-[0_18px_60px_rgba(2,6,23,0.10)]"
+>
+  <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <!-- Filter -->
+      <label class="grid gap-1.5">
+        <span class="text-xs font-extrabold text-slate-600">Estado</span>
+        <select
+          class="h-11 rounded-xl border border-slate-200 bg-white/80 px-3 text-sm text-slate-900 shadow-sm outline-none
+                 transition focus:border-[rgba(255,27,45,0.35)] focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+          [(ngModel)]="statusFilter"
+          (ngModelChange)="statusFilterChange.emit($event)"
+        >
+          <option value="ALL">Todos</option>
+          <option value="PENDING">Pendientes</option>
+          <option value="APPROVED">Aprobados</option>
+          <option value="REJECTED">Rechazados</option>
+        </select>
+      </label>
+
+      <!-- Search -->
+      <label class="grid gap-1.5 sm:col-span-2">
+        <span class="text-xs font-extrabold text-slate-600">Buscar</span>
+        <div class="relative">
+          <input
+            class="h-11 w-full rounded-xl border border-slate-200 bg-white/80 pl-10 pr-10 text-sm text-slate-900 shadow-sm outline-none
+                   transition focus:border-[rgba(255,27,45,0.35)] focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+            placeholder="Nombre, email, ciudad, especialidad…"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="searchTermChange.emit($event)"
+          />
+          <span class="absolute inset-y-0 left-3 flex items-center text-slate-400">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </span>
+
+          <button
+            *ngIf="searchTerm"
+            type="button"
+            class="absolute inset-y-0 right-2 my-2 rounded-lg px-2 text-xs font-extrabold text-slate-600 hover:bg-slate-100"
+            (click)="clearSearch.emit()"
+          >
+            Limpiar
+          </button>
+        </div>
+      </label>
+
+      <!-- Sort -->
+      <label class="grid gap-1.5">
+        <span class="text-xs font-extrabold text-slate-600">Ordenar</span>
+        <div class="flex gap-2">
+          <select
+            class="h-11 w-full rounded-xl border border-slate-200 bg-white/80 px-3 text-sm text-slate-900 shadow-sm outline-none
+                   transition focus:border-[rgba(255,27,45,0.35)] focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+            [(ngModel)]="sortKey"
+            (ngModelChange)="sortKeyChange.emit($event)"
+          >
+            <option value="updated_at">Actualizado</option>
+            <option value="name">Nombre</option>
+            <option value="status">Estado</option>
+            <option value="years_experience">Experiencia</option>
+          </select>
+
+          <button
+            type="button"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white/80
+                   text-slate-700 shadow-sm transition hover:bg-white active:scale-[0.99]"
+            (click)="toggleSortDir.emit()"
+            [title]="sortDir === 'asc' ? 'Ascendente' : 'Descendente'"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path *ngIf="sortDir === 'asc'" d="M12 5l-5 6h10l-5-6Z" fill="currentColor"/>
+              <path *ngIf="sortDir === 'desc'" d="M12 19l5-6H7l5 6Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </label>
+    </div>
+
+    <!-- Bulk actions bar -->
+    <div
+      *ngIf="selectedCount > 0"
+      class="flex flex-wrap items-center justify-between gap-3 rounded-2xl
+             border border-[rgba(255,27,45,0.22)] bg-[rgba(255,27,45,0.08)]
+             px-4 py-3"
+    >
+      <div class="text-sm font-extrabold text-[#7a0015]">
+        Seleccionadas: <span class="text-[color:var(--accent2)]">{{ selectedCount }}</span>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button
+          type="button"
+          (click)="bulkDecide.emit('APPROVE')"
+          [disabled]="bulkBusy || loading"
+          class="inline-flex h-10 items-center justify-center rounded-xl border border-emerald-200 bg-white/85 px-3
+                 text-sm font-extrabold text-emerald-700 shadow-sm transition hover:bg-emerald-50 disabled:opacity-60"
+        >
+          {{ bulkBusy ? 'Procesando…' : 'Aprobar lote' }}
+        </button>
+
+        <button
+          type="button"
+          (click)="bulkDecide.emit('REJECT')"
+          [disabled]="bulkBusy || loading"
+          class="inline-flex h-10 items-center justify-center rounded-xl border border-rose-200 bg-white/85 px-3
+                 text-sm font-extrabold text-rose-700 shadow-sm transition hover:bg-rose-50 disabled:opacity-60"
+        >
+          {{ bulkBusy ? 'Procesando…' : 'Rechazar lote' }}
+        </button>
+
+        <button
+          type="button"
+          (click)="clearSelection.emit()"
+          class="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white/85 px-3
+                 text-sm font-extrabold text-slate-800 shadow-sm transition hover:bg-white"
+        >
+          Limpiar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

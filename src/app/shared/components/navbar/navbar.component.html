@@ -1,41 +1,211 @@
-<header class="nav">
+<header class="nav" [class.nav--open]="menuOpen">
   <div class="nav__wrap">
     <!-- Brand -->
     <a class="brand" routerLink="/" (click)="closeMenu()">
       <span class="brand__mark">S</span>
-      <span class="brand__text">SIPH</span>
+      <span class="brand__text">
+        SIPH
+        <small class="brand__hint">Servicios inmediatos</small>
+      </span>
     </a>
 
     <!-- Desktop links -->
     <nav class="links" aria-label="Navegación principal">
-      <a routerLink="/workers" routerLinkActive="isActive">Expertos</a>
-      <a routerLink="/requests/new" routerLinkActive="isActive">Solicitar</a>
-      <a routerLink="/my-requests" routerLinkActive="isActive">Mis solicitudes</a>
-      <a routerLink="/reviews" routerLinkActive="isActive">Reseñas</a>
+      <div class="links__pill">
+        <a class="link" routerLink="/workers" routerLinkActive="isActive" (click)="closeMenu()">
+          Expertos
+        </a>
+
+        <a
+          class="link"
+          *ngIf="isAuth"
+          routerLink="/dashboard"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Dashboard
+        </a>
+
+        <a
+          class="link"
+          *ngIf="isAuth && (isUser || isAdmin)"
+          routerLink="/requests/new"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Solicitar
+        </a>
+
+        <a
+          class="link"
+          *ngIf="isAuth && (isUser || isAdmin)"
+          routerLink="/my-requests"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Mis solicitudes
+        </a>
+
+        <a
+          class="link"
+          *ngIf="isAuth && (isUser || isAdmin)"
+          routerLink="/reviews"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Reseñas
+        </a>
+
+        <a
+          class="link link--accent"
+          *ngIf="isAuth && isUser"
+          routerLink="/work/apply"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Trabajar
+        </a>
+
+        <a
+          class="link link--admin"
+          *ngIf="isAuth && isAdmin"
+          routerLink="/admin/worker-applications"
+          routerLinkActive="isActive"
+          (click)="closeMenu()"
+        >
+          Admin
+        </a>
+      </div>
     </nav>
 
     <!-- Actions -->
     <div class="actions">
-      <a class="btn btn--ghost" routerLink="/auth/login">Login</a>
-      <a class="btn btn--primary" routerLink="/auth/register">Registro</a>
+      <!-- No logueado -->
+      <ng-container *ngIf="!isAuth; else loggedBlock">
+        <a class="btn btn--ghost" routerLink="/auth/login">Login</a>
+        <a class="btn btn--primary" routerLink="/auth/register">Registro</a>
+      </ng-container>
+
+      <!-- Logueado -->
+      <ng-template #loggedBlock>
+        <div class="userBox">
+          <button
+            class="userPill"
+            type="button"
+            (click)="toggleUserMenu()"
+            [attr.aria-expanded]="userMenuOpen"
+            aria-haspopup="menu"
+            aria-label="Menú de usuario"
+          >
+            <span class="avatar" aria-hidden="true">{{ initials }}</span>
+
+            <span class="userMeta">
+              <span class="userName">
+                {{ user?.first_name || 'Usuario' }} {{ user?.last_name || '' }}
+              </span>
+              <span class="userRole">{{ role }}</span>
+            </span>
+
+            <span class="chev" [class.chev--open]="userMenuOpen" aria-hidden="true">▾</span>
+          </button>
+
+          <div class="userMenu" [class.userMenu--open]="userMenuOpen" role="menu">
+            <div class="userMenu__top">
+              <div class="userMenu__title">Cuenta</div>
+              <div class="userMenu__sub">{{ user?.email || '' }}</div>
+            </div>
+
+            <a class="menuItem" routerLink="/dashboard" (click)="closeMenu()" role="menuitem">
+              Ir al dashboard
+            </a>
+
+            <a
+              class="menuItem"
+              *ngIf="isAuth && (isUser || isAdmin)"
+              routerLink="/my-requests"
+              (click)="closeMenu()"
+              role="menuitem"
+            >
+              Mis solicitudes
+            </a>
+
+            <a
+              class="menuItem"
+              *ngIf="isAuth && isUser"
+              routerLink="/work/apply"
+              (click)="closeMenu()"
+              role="menuitem"
+            >
+              Solicitar trabajar
+            </a>
+
+            <a
+              class="menuItem"
+              *ngIf="isAuth && isAdmin"
+              routerLink="/admin/worker-applications"
+              (click)="closeMenu()"
+              role="menuitem"
+            >
+              Revisar solicitudes
+            </a>
+
+            <div class="menuSep" aria-hidden="true"></div>
+
+            <button type="button" class="menuItem menuItem--danger" (click)="logout()" role="menuitem">
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </ng-template>
 
       <!-- Mobile toggle -->
-      <button class="burger" type="button" (click)="toggleMenu()" aria-label="Abrir menú">
+      <button
+        class="burger"
+        [class.burger--open]="menuOpen"
+        type="button"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen"
+        aria-controls="mobileMenu"
+        aria-label="Abrir menú"
+      >
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile menu -->
-  <div class="mobile" [class.mobile--open]="menuOpen">
-    <a routerLink="/workers" (click)="closeMenu()">Expertos</a>
-    <a routerLink="/requests/new" (click)="closeMenu()">Solicitar</a>
-    <a routerLink="/my-requests" (click)="closeMenu()">Mis solicitudes</a>
-    <a routerLink="/reviews" (click)="closeMenu()">Reseñas</a>
+  <!-- Backdrop mobile -->
+  <div class="backdrop" *ngIf="menuOpen" (click)="closeMenu()" aria-hidden="true"></div>
 
-    <div class="mobile__actions">
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="mobile" [class.mobile--open]="menuOpen">
+    <a class="mLink" routerLink="/workers" (click)="closeMenu()">Expertos</a>
+    <a class="mLink" *ngIf="isAuth" routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+
+    <a class="mLink" *ngIf="isAuth && (isUser || isAdmin)" routerLink="/requests/new" (click)="closeMenu()">
+      Solicitar
+    </a>
+    <a class="mLink" *ngIf="isAuth && (isUser || isAdmin)" routerLink="/my-requests" (click)="closeMenu()">
+      Mis solicitudes
+    </a>
+    <a class="mLink" *ngIf="isAuth && (isUser || isAdmin)" routerLink="/reviews" (click)="closeMenu()">
+      Reseñas
+    </a>
+
+    <a class="mLink mLink--accent" *ngIf="isAuth && isUser" routerLink="/work/apply" (click)="closeMenu()">
+      Trabajar (Ser técnico)
+    </a>
+
+    <a class="mLink mLink--admin" *ngIf="isAuth && isAdmin" routerLink="/admin/worker-applications" (click)="closeMenu()">
+      Admin • Solicitudes
+    </a>
+
+    <div class="mobile__actions" *ngIf="!isAuth">
       <a class="btn btn--ghost" routerLink="/auth/login" (click)="closeMenu()">Login</a>
       <a class="btn btn--primary" routerLink="/auth/register" (click)="closeMenu()">Registro</a>
+    </div>
+
+    <div class="mobile__actions" *ngIf="isAuth">
+      <button class="btn btn--ghost" type="button" (click)="logout()">Cerrar sesión</button>
     </div>
   </div>
 </header>

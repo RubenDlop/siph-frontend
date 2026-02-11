@@ -1,46 +1,152 @@
 <main class="auth">
-  <div class="auth__bg"></div>
+  <section class="shell">
+    <!-- IZQUIERDA: PANEL -->
+    <section class="panel" aria-label="Acceso">
+      <div class="panel__inner">
+        <div class="brand" aria-label="SIPH">
+          <span class="brand__mark">S</span>
+          <span class="brand__name">SIPH</span>
+        </div>
 
-  <section class="auth__card">
-    <header class="head">
-      <div class="mark">S</div>
-      <div>
-        <h1>Iniciar sesión</h1>
-        <p>Accede con tu cuenta para solicitar servicios.</p>
+        <h1>Login</h1>
+        <p class="sub">
+          Inicia sesión para continuar. Puedes usar Google o tu correo y contraseña.
+        </p>
+
+        <!-- ✅ GOOGLE (botón visual + botón real invisible encima) -->
+        <div class="googleArea">
+          <div
+            class="gsiWrap"
+            [class.gsiWrap--disabled]="loading || !googleReady"
+            [attr.aria-disabled]="loading || !googleReady"
+          >
+            <!-- Botón ROJO visual -->
+            <button class="googleBtnRed" type="button" [disabled]="loading || !googleReady">
+              <span class="googleBtnRed__ico" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path
+                    fill="#EA4335"
+                    d="M24 9.5c3.54 0 6.81 1.22 9.34 3.62l6.84-6.84C35.92 2.54 30.39 0 24 0 14.62 0 6.51 5.38 2.56 13.22l8.02 6.22C12.54 13.08 17.82 9.5 24 9.5z"
+                  />
+                  <path
+                    fill="#4285F4"
+                    d="M46.5 24.5c0-1.64-.14-3.22-.41-4.75H24v9h12.68c-.55 2.96-2.25 5.47-4.73 7.16l7.27 5.64C43.53 37.37 46.53 31.53 46.5 24.5z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M10.58 28.56c-.5-1.5-.78-3.1-.78-4.76 0-1.66.28-3.26.78-4.76l-8.02-6.22C.92 16.24 0 20.02 0 23.8c0 3.78.92 7.56 2.56 10.98l8.02-6.22z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M24 47.5c6.39 0 11.76-2.11 15.68-5.73l-7.27-5.64c-2.02 1.36-4.62 2.17-8.41 2.17-6.18 0-11.46-3.58-13.42-8.44l-8.02 6.22C6.51 42.12 14.62 47.5 24 47.5z"
+                  />
+                </svg>
+              </span>
+
+              <span class="googleBtnRed__text">
+                {{ loading ? 'Conectando...' : 'Continuar con Google' }}
+              </span>
+
+              <span class="googleBtnRed__spacer" aria-hidden="true"></span>
+            </button>
+
+            <!-- ✅ AQUÍ Google renderiza SU botón real (invisible pero clickable) -->
+            <div #gsiBtn class="gsiBtnOverlay" aria-label="Google Sign-In real"></div>
+          </div>
+
+          <div class="divider"><span>o</span></div>
+        </div>
+
+        <!-- CORREO/CONTRASEÑA -->
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <label class="field" [class.is-invalid]="f.email.touched && f.email.invalid">
+            <span>Correo</span>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="correo@dominio.com"
+              autocomplete="email"
+            />
+            <small class="err" *ngIf="f.email.touched && f.email.invalid">
+              Ingresa un correo válido.
+            </small>
+          </label>
+
+          <label class="field" [class.is-invalid]="f.password.touched && f.password.invalid">
+            <span>Contraseña</span>
+
+            <div class="pass">
+              <input
+                [type]="showPass ? 'text' : 'password'"
+                formControlName="password"
+                placeholder="Tu contraseña"
+                autocomplete="current-password"
+              />
+              <button type="button" class="pass__toggle" (click)="showPass = !showPass">
+                {{ showPass ? 'Ocultar' : 'Ver' }}
+              </button>
+            </div>
+
+            <small class="err" *ngIf="f.password.touched && f.password.invalid">
+              La contraseña debe tener al menos 6 caracteres.
+            </small>
+          </label>
+
+          <div class="alert" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+          <button
+            class="btn"
+            type="submit"
+            [disabled]="loading || form.invalid"
+            [class.is-loading]="loading"
+          >
+            <span class="btn__text">{{ loading ? 'Entrando...' : 'Iniciar sesión' }}</span>
+          </button>
+
+          <div class="foot">
+            <span>¿No tienes cuenta?</span>
+            <a routerLink="/auth/register">Crear cuenta</a>
+          </div>
+        </form>
+
+        <p class="fine">
+          Al continuar aceptas nuestros
+          <span class="linkLike">Términos</span> y
+          <span class="linkLike">Política de privacidad</span>.
+        </p>
+
+        <p class="copyright">©{{ year }} SIPH • Prototipo académico</p>
       </div>
-    </header>
+    </section>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <div class="grid">
-        <label class="field full">
-          <span>Email</span>
-          <input type="email" formControlName="email" placeholder="ej: correo@dominio.com" />
-          <small class="err" *ngIf="f.email.touched && f.email.invalid">
-            Ingresa un correo válido.
-          </small>
-        </label>
-
-        <label class="field full">
-          <span>Contraseña</span>
-          <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
-          <small class="err" *ngIf="f.password.touched && f.password.invalid">
-            La contraseña debe tener al menos 6 caracteres.
-          </small>
-        </label>
+    <!-- DERECHA: CARRUSEL -->
+    <aside class="hero" aria-label="Carrusel">
+      <div class="hero__slides" aria-hidden="true">
+        <div
+          class="slide"
+          *ngFor="let s of slides; let i = index"
+          [class.is-active]="i === active"
+          [style.backgroundImage]="'url(' + s.src + ')'"
+        ></div>
       </div>
 
-      <div class="alert" *ngIf="errorMsg">
-        {{ errorMsg }}
+      <div class="hero__shade" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <h2>{{ currentSlide.title }}</h2>
+        <p>{{ currentSlide.subtitle }}</p>
       </div>
 
-      <button class="btn btn--primary" type="submit" [disabled]="loading">
-        {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
-      </button>
-
-      <div class="foot">
-        <span>¿No tienes cuenta?</span>
-        <a routerLink="/auth/register">Crea una cuenta</a>
+      <div class="hero__dots" aria-label="Controles de carrusel">
+        <button
+          type="button"
+          class="dot"
+          *ngFor="let _ of slides; let i = index"
+          [class.is-active]="i === active"
+          (click)="goTo(i)"
+          [attr.aria-label]="'Ir a slide ' + (i + 1)"
+        ></button>
       </div>
-    </form>
+    </aside>
   </section>
 </main>

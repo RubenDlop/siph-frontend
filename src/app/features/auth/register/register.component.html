@@ -1,72 +1,106 @@
 <main class="auth">
-<<<<<<< HEAD
   <section class="shell">
-    <!-- LADO IZQUIERDO (FONDO + MENSAJE) -->
+    <!-- IZQUIERDA -->
     <aside class="hero" aria-hidden="true">
+      <img class="hero__img" [src]="heroImg" alt="" loading="eager" decoding="async" />
       <div class="hero__overlay"></div>
+
+      <div class="hero__top">
+        <div class="brand">
+          <span class="brand__mark">S</span>
+          <span class="brand__name">SIPH</span>
+        </div>
+        <span class="pill">Prototipo • Servicios para el hogar</span>
+      </div>
+
       <div class="hero__content">
         <h2>Servicios para tu hogar</h2>
         <p>Encuentra expertos cerca de ti, con reseñas y seguimiento del servicio.</p>
 
         <ul class="hero__list">
-          <li>✅ Perfiles y calificaciones</li>
-          <li>✅ Solicitudes y estados en tiempo real</li>
-          <li>✅ Contacto rápido con expertos</li>
+          <li><span class="dot">✓</span> Perfiles y calificaciones</li>
+          <li><span class="dot">✓</span> Solicitudes y estados en tiempo real</li>
+          <li><span class="dot">✓</span> Contacto rápido con expertos</li>
         </ul>
+
+        <div class="hero__card">
+          <div class="hero__cardTitle">Confianza y trazabilidad</div>
+          <div class="hero__cardText">
+            Historial del servicio, estados claros y reseñas para tomar mejores decisiones.
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__bottom">
+        <span class="tiny">© SIPH • Institución Universitaria de Barranquilla</span>
       </div>
     </aside>
 
-    <!-- LADO DERECHO (FORM) -->
+    <!-- DERECHA -->
     <section class="panel">
       <header class="panel__head">
-        <h1>Registra tu cuenta</h1>
-        <p>Regístrate para solicitar servicios o ofrecer tus servicios como experto.</p>
+        <div class="panel__brand">
+          <div>
+            <div class="panel__title">Registra tu cuenta</div>
+            <div class="panel__subtitle">
+              Regístrate para solicitar servicios o ofrecer tus servicios como experto.
+            </div>
+          </div>
+        </div>
       </header>
 
-      <!-- GOOGLE -->
+      <!-- ✅ GOOGLE (GSI renderButton) -->
       <div class="social">
-        <div id="googleBtn" class="googleBtn"></div>
+        <div
+          class="gsiWrap"
+          [class.gsiWrap--disabled]="loading || !googleReady"
+          [attr.aria-disabled]="loading || !googleReady"
+        >
+          <div #gsiBtn class="gsiBtn" aria-label="Continuar con Google"></div>
+        </div>
+
         <div class="divider"><span>o</span></div>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <div class="grid">
-          <label class="field">
+          <label class="field" [class.is-invalid]="f.first_name.touched && f.first_name.invalid">
             <span>Nombre</span>
-            <input type="text" formControlName="first_name" placeholder="Juan" />
+            <input type="text" formControlName="first_name" placeholder="Juan" autocomplete="given-name" />
             <small class="err" *ngIf="f.first_name.touched && f.first_name.invalid">
               Ingresa un nombre válido (mín. 2).
             </small>
           </label>
 
-          <label class="field">
+          <label class="field" [class.is-invalid]="f.last_name.touched && f.last_name.invalid">
             <span>Apellido</span>
-            <input type="text" formControlName="last_name" placeholder="Pérez" />
+            <input type="text" formControlName="last_name" placeholder="Pérez" autocomplete="family-name" />
             <small class="err" *ngIf="f.last_name.touched && f.last_name.invalid">
               Ingresa un apellido válido (mín. 2).
             </small>
           </label>
 
-          <label class="field full">
+          <label class="field full" [class.is-invalid]="f.email.touched && f.email.invalid">
             <span>Email</span>
-            <input type="email" formControlName="email" placeholder="correo@dominio.com" />
-            <small class="err" *ngIf="f.email.touched && f.email.invalid">
-              Ingresa un correo válido.
-            </small>
+            <input type="email" formControlName="email" placeholder="correo@dominio.com" autocomplete="email" />
+            <small class="err" *ngIf="f.email.touched && f.email.invalid">Ingresa un correo válido.</small>
           </label>
 
-          <label class="field full">
+          <label class="field full" [class.is-invalid]="f.password.touched && f.password.invalid">
             <span>Contraseña</span>
+
             <div class="pass">
               <input
                 [type]="showPass ? 'text' : 'password'"
                 formControlName="password"
                 placeholder="Mínimo 6 caracteres"
+                autocomplete="new-password"
               />
               <button type="button" class="pass__toggle" (click)="showPass = !showPass">
                 {{ showPass ? 'Ocultar' : 'Ver' }}
               </button>
             </div>
+
             <small class="err" *ngIf="f.password.touched && f.password.invalid">
               La contraseña debe tener al menos 6 caracteres.
             </small>
@@ -80,12 +114,10 @@
           </div>
         </div>
 
-        <div class="alert" *ngIf="errorMsg">
-          {{ errorMsg }}
-        </div>
+        <div class="alert" *ngIf="errorMsg">{{ errorMsg }}</div>
 
-        <button class="btn" type="submit" [disabled]="loading || form.invalid">
-          {{ loading ? 'Creando...' : 'Crear cuenta' }}
+        <button class="btn" type="submit" [disabled]="loading || form.invalid" [class.is-loading]="loading">
+          <span class="btn__text">{{ loading ? 'Creando...' : 'Crear cuenta' }}</span>
         </button>
 
         <div class="foot">
@@ -94,73 +126,5 @@
         </div>
       </form>
     </section>
-=======
-  <div class="auth__bg"></div>
-
-  <section class="auth__card">
-    <header class="head">
-      <div class="mark">S</div>
-      <div>
-        <h1>Crear cuenta</h1>
-        <p>Regístrate para solicitar servicios o ofrecer tus servicios como experto.</p>
-      </div>
-    </header>
-
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <div class="grid">
-        <label class="field">
-          <span>Nombre</span>
-          <input type="text" formControlName="first_name" placeholder="Ej: Juan" />
-          <small class="err" *ngIf="f.first_name.touched && f.first_name.invalid">
-            Ingresa un nombre válido.
-          </small>
-        </label>
-
-        <label class="field">
-          <span>Apellido</span>
-          <input type="text" formControlName="last_name" placeholder="Ej: Pérez" />
-          <small class="err" *ngIf="f.last_name.touched && f.last_name.invalid">
-            Ingresa un apellido válido.
-          </small>
-        </label>
-
-        <label class="field full">
-          <span>Email</span>
-          <input type="email" formControlName="email" placeholder="ej: correo@dominio.com" />
-          <small class="err" *ngIf="f.email.touched && f.email.invalid">
-            Ingresa un correo válido.
-          </small>
-        </label>
-
-        <label class="field">
-          <span>Contraseña</span>
-          <input type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
-          <small class="err" *ngIf="f.password.touched && f.password.invalid">
-            La contraseña debe tener al menos 6 caracteres.
-          </small>
-        </label>
-
-        <div class="field full hint">
-          <span class="hint__title">Cuenta de usuario</span>
-          <p class="hint__text">
-            Todos los registros se crean como usuarios. Para solicitar servicios debes iniciar sesión.
-          </p>
-        </div>
-      </div>
-
-      <div class="alert" *ngIf="errorMsg">
-        {{ errorMsg }}
-      </div>
-
-      <button class="btn btn--primary" type="submit" [disabled]="loading">
-        {{ loading ? 'Creando cuenta...' : 'Crear cuenta' }}
-      </button>
-
-      <div class="foot">
-        <span>¿Ya tienes cuenta?</span>
-        <a routerLink="/auth/login">Inicia sesión</a>
-      </div>
-    </form>
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
   </section>
 </main>

@@ -9,23 +9,37 @@ export const routes: Routes = [
       import('./features/home/home.component').then((m) => m.HomeComponent),
   },
 
-  // ✅ AUTH (lo que tú estás usando: /auth/login y /auth/register)
+  // ✅ DASHBOARD
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
+  },
+
+  // ✅ AUTH
   {
     path: 'auth/login',
     loadComponent: () =>
-      import('./features/auth/login/login.component').then((m) => m.LoginComponent),
+      import('./features/auth/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
   },
   {
     path: 'auth/register',
     loadComponent: () =>
-      import('./features/auth/register/register.component').then((m) => m.RegisterComponent),
+      import('./features/auth/register/register.component').then(
+        (m) => m.RegisterComponent
+      ),
   },
 
-  // ✅ Alias para que /login y /register también funcionen
+  // ✅ Alias
   { path: 'login', redirectTo: 'auth/login', pathMatch: 'full' },
   { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
 
-  // ✅ Workers
+  // ✅ Workers (listado / perfil público)
   {
     path: 'workers',
     loadComponent: () =>
@@ -67,6 +81,42 @@ export const routes: Routes = [
       import('./features/reviews/review-list/review-list.component').then(
         (m) => m.ReviewListComponent
       ),
+  },
+
+  // ✅ 👷‍♂️ Solicitud para trabajar como Técnico (SOLO USER)
+  {
+    path: 'work/apply',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['USER'] },
+    loadComponent: () =>
+      import(
+        './features/worker-applications/apply/worker-apply/worker-apply.component'
+      ).then((m) => m.WorkerApplyComponent),
+  },
+
+  // ✅ 🛡️ Admin: revisar solicitudes (SOLO ADMIN)
+  // ✅ LISTADO: /admin/worker-applications
+  // ✅ DETALLE FULL: /admin/worker-applications/:id
+  {
+    path: 'admin/worker-applications',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ADMIN'] },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './features/worker-applications/admin-list/worker-applications-admin/worker-applications-admin.component'
+          ).then((m) => m.WorkerApplicationsAdminComponent),
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import(
+            './features/worker-applications/admin-detail/worker-application-admin-detail/worker-application-admin-detail.component'
+          ).then((m) => m.WorkerApplicationAdminDetailComponent),
+      },
+    ],
   },
 
   // ✅ Not Found

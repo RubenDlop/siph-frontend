@@ -1,0 +1,347 @@
+<!-- src/app/features/worker-applications/admin-detail/worker-application-admin-detail/worker-application-admin-detail.component.html -->
+
+<main
+  class="relative min-h-[calc(100vh-70px)] overflow-hidden px-4 py-8 sm:px-6 lg:px-8
+         bg-[radial-gradient(900px_420px_at_12%_10%,rgba(255,27,45,0.18),transparent_60%),radial-gradient(700px_360px_at_88%_18%,rgba(184,0,31,0.14),transparent_62%),radial-gradient(900px_520px_at_55%_110%,rgba(255,77,93,0.12),transparent_58%),linear-gradient(180deg,#f8fafc,#eef2ff_35%,#f6f7fb)]"
+>
+  <!-- subtle grid overlay -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.25]
+           [background-size:54px_54px]
+           bg-[linear-gradient(to_right,rgba(15,23,42,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.05)_1px,transparent_1px)]
+           [mask-image:radial-gradient(circle_at_20%_10%,rgba(0,0,0,1),rgba(0,0,0,0.1)_55%,transparent_75%)]"
+  ></div>
+
+  <section class="relative z-10 mx-auto w-full max-w-6xl pb-16">
+    <!-- Header -->
+    <header
+      class="relative overflow-hidden rounded-[22px] border border-[rgba(15,23,42,0.10)]
+             bg-white/70 backdrop-blur-xl shadow-[0_30px_90px_rgba(2,6,23,0.14)]
+             px-5 py-5 sm:px-6"
+    >
+      <div
+        class="pointer-events-none absolute inset-0 opacity-90
+               bg-[radial-gradient(520px_180px_at_16%_20%,rgba(255,27,45,0.18),transparent_60%),radial-gradient(520px_180px_at_92%_40%,rgba(184,0,31,0.12),transparent_62%)]"
+      ></div>
+
+      <div class="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              (click)="back()"
+              class="inline-flex h-10 items-center justify-center gap-2 rounded-xl
+                     border border-slate-200 bg-white/80 px-3 text-sm font-extrabold text-slate-800
+                     shadow-sm transition hover:bg-white active:scale-[0.99]"
+            >
+              ← Volver
+            </button>
+
+            <div
+              class="inline-flex items-center gap-2 rounded-full border border-[rgba(255,27,45,0.22)]
+                     bg-[rgba(255,27,45,0.08)] px-3 py-1 text-xs font-extrabold
+                     text-[#7a0015] shadow-sm"
+            >
+              <span class="inline-block h-2 w-2 rounded-full bg-[color:var(--accent)]"></span>
+              Admin • Detalle
+            </div>
+          </div>
+
+          <h1 class="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            Solicitud #{{ id }}
+          </h1>
+
+          <p class="max-w-2xl text-sm font-semibold leading-relaxed text-slate-600">
+            Vista completa del detalle de postulación. Decide aprobar/rechazar.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <button
+            type="button"
+            (click)="load()"
+            [disabled]="loading"
+            class="inline-flex h-11 items-center justify-center gap-2 rounded-xl
+                   border border-[rgba(255,27,45,0.24)] bg-white/75 px-4 text-sm font-extrabold
+                   text-[#7a0015] shadow-[0_14px_40px_rgba(2,6,23,0.08)]
+                   backdrop-blur transition hover:bg-white/95 active:scale-[0.99]
+                   disabled:opacity-60"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 12a9 9 0 1 1-2.64-6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M21 3v7h-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {{ loading ? 'Cargando…' : 'Actualizar' }}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Alerts -->
+    <div
+      *ngIf="errorMsg"
+      class="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-800 shadow-[0_10px_30px_rgba(2,6,23,0.08)]"
+    >
+      {{ errorMsg }}
+    </div>
+
+    <div
+      *ngIf="toastMsg"
+      class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 shadow-[0_10px_30px_rgba(2,6,23,0.08)]"
+    >
+      {{ toastMsg }}
+    </div>
+
+    <!-- Loading skeleton -->
+    <div *ngIf="loading" class="mt-6 grid gap-3">
+      <div class="h-28 rounded-2xl border border-slate-200 bg-white/70"></div>
+      <div class="h-56 rounded-2xl border border-slate-200 bg-white/70"></div>
+      <div class="h-56 rounded-2xl border border-slate-200 bg-white/70"></div>
+    </div>
+
+    <!-- Content -->
+    <ng-container *ngIf="!loading && app as a">
+      <!-- Top strip: user + status + actions -->
+      <section
+        class="mt-6 rounded-2xl border border-[rgba(15,23,42,0.10)]
+               bg-white/70 backdrop-blur-xl shadow-[0_18px_60px_rgba(2,6,23,0.10)]
+               p-5"
+      >
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div class="flex items-center gap-3">
+            <div
+              class="grid h-12 w-12 place-items-center rounded-2xl font-extrabold text-[#7a0015]
+                     border border-[rgba(255,27,45,0.20)]
+                     bg-[radial-gradient(circle_at_30%_30%,rgba(255,27,45,0.22),rgba(184,0,31,0.10))]"
+            >
+              {{ userName(a).slice(0,1) }}
+            </div>
+
+            <div class="min-w-0">
+              <div class="truncate text-base font-extrabold text-slate-900">{{ userName(a) }}</div>
+              <div class="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-600">
+                <span class="truncate">{{ a.user?.email || '—' }}</span>
+                <button
+                  type="button"
+                  class="rounded-lg px-2 py-1 text-[11px] font-extrabold text-[#7a0015] hover:bg-[rgba(255,27,45,0.08)]"
+                  (click)="copyEmail(a.user?.email)"
+                  [disabled]="!a.user?.email"
+                >
+                  Copiar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div [ngClass]="badgeClass(a.status)">
+              <span class="h-2 w-2 rounded-full bg-current opacity-80"></span>
+              {{ badgeText(a.status) }}
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                (click)="decide('APPROVE')"
+                [disabled]="busy || loading || !app"
+                class="inline-flex h-11 items-center justify-center rounded-xl border border-emerald-200
+                       bg-emerald-50 px-4 text-sm font-extrabold text-emerald-700 shadow-sm
+                       transition hover:bg-emerald-100 disabled:opacity-60"
+              >
+                {{ busy ? 'Procesando…' : 'Aprobar' }}
+              </button>
+
+              <button
+                type="button"
+                (click)="decide('REJECT')"
+                [disabled]="busy || loading || !app"
+                class="inline-flex h-11 items-center justify-center rounded-xl border border-rose-200
+                       bg-rose-50 px-4 text-sm font-extrabold text-rose-700 shadow-sm
+                       transition hover:bg-rose-100 disabled:opacity-60"
+              >
+                {{ busy ? 'Procesando…' : 'Rechazar' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+            <div class="text-xs font-extrabold text-slate-500">Creado</div>
+            <div class="mt-1 text-sm font-semibold text-slate-800">{{ a.created_at | date:'medium' }}</div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+            <div class="text-xs font-extrabold text-slate-500">Actualizado</div>
+            <div class="mt-1 text-sm font-semibold text-slate-800">{{ a.updated_at | date:'medium' }}</div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+            <div class="text-xs font-extrabold text-slate-500">Revisado en</div>
+            <div class="mt-1 text-sm font-semibold text-slate-800">
+              {{ a.reviewed_at ? (a.reviewed_at | date:'medium') : '—' }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Details -->
+      <section class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <!-- Usuario -->
+        <div class="rounded-2xl border border-[rgba(15,23,42,0.10)] bg-white/70 p-5 backdrop-blur shadow-sm">
+          <h2 class="text-sm font-extrabold text-slate-900">Usuario</h2>
+
+          <div class="mt-4 grid grid-cols-[130px_1fr] gap-x-3 gap-y-2 text-sm">
+            <div class="text-xs font-extrabold text-slate-500">ID usuario</div>
+            <div class="font-mono text-xs font-semibold text-slate-700">{{ a.user_id }}</div>
+
+            <div class="text-xs font-extrabold text-slate-500">Rol</div>
+            <div class="text-sm font-semibold text-slate-700">{{ a.user?.role || '—' }}</div>
+
+            <div class="text-xs font-extrabold text-slate-500">Activo</div>
+            <div class="text-sm font-semibold text-slate-700">{{ a.user?.is_active ? 'Sí' : 'No' }}</div>
+          </div>
+        </div>
+
+        <!-- Datos enviados -->
+        <div class="rounded-2xl border border-[rgba(15,23,42,0.10)] bg-white/70 p-5 backdrop-blur shadow-sm">
+          <h2 class="text-sm font-extrabold text-slate-900">Datos enviados</h2>
+
+          <div class="mt-4 grid grid-cols-[130px_1fr] gap-x-3 gap-y-2 text-sm">
+            <div class="text-xs font-extrabold text-slate-500">Teléfono</div>
+            <div class="font-semibold text-slate-800">{{ a.phone || '—' }}</div>
+
+            <div class="text-xs font-extrabold text-slate-500">Ciudad</div>
+            <div class="font-semibold text-slate-800">{{ a.city || '—' }}</div>
+
+            <div class="text-xs font-extrabold text-slate-500">Especialidad</div>
+            <div class="font-semibold text-slate-800">{{ a.specialty || '—' }}</div>
+
+            <div class="text-xs font-extrabold text-slate-500">Experiencia</div>
+            <div class="font-semibold text-slate-800">{{ a.years_experience ?? 0 }} años</div>
+          </div>
+
+          <div class="mt-4">
+            <div class="text-xs font-extrabold text-slate-500">Biografía / descripción</div>
+            <div class="mt-2 rounded-xl border border-slate-200 bg-white/70 px-3 py-3 text-sm font-semibold leading-relaxed text-slate-800">
+              {{ a.bio || '—' }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Docs -->
+      <section class="mt-4 rounded-2xl border border-[rgba(15,23,42,0.10)] bg-white/70 p-5 backdrop-blur shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-extrabold text-slate-900">Documentos</h2>
+          <span *ngIf="verifLoading" class="text-xs font-semibold text-slate-500">Cargando…</span>
+        </div>
+
+        <div
+          *ngIf="verifError"
+          class="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-800"
+        >
+          {{ verifError }}
+        </div>
+
+        <ng-container *ngIf="!verifLoading && !verifError">
+          <div *ngIf="!verifCase" class="mt-2 text-sm font-semibold text-slate-600">
+            Aún no hay caso de verificación / documentos.
+          </div>
+
+          <ng-container *ngIf="verifCase as vc">
+            <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+                <div class="text-xs font-extrabold text-slate-500">Caso</div>
+                <div class="mt-1 font-mono text-xs font-semibold text-slate-700">#{{ vc.caseId }}</div>
+              </div>
+              <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+                <div class="text-xs font-extrabold text-slate-500">Estado</div>
+                <div class="mt-1 text-sm font-semibold text-slate-800">{{ vc.status }}</div>
+              </div>
+              <div class="rounded-2xl border border-slate-200 bg-white/70 p-4">
+                <div class="text-xs font-extrabold text-slate-500">Nivel</div>
+                <div class="mt-1 text-sm font-semibold text-slate-800">{{ vc.targetLevel }}</div>
+              </div>
+            </div>
+
+            <div class="mt-4 grid gap-2" *ngIf="vc.documents?.length; else noDocsTpl">
+              <div
+                class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white/70 px-3 py-3"
+                *ngFor="let d of vc.documents"
+              >
+                <div class="min-w-0">
+                  <div class="truncate text-xs font-extrabold tracking-wide text-slate-900">{{ d.docType }}</div>
+                  <div class="mt-1 text-xs font-semibold text-slate-600">
+                    Recibido: {{ d.receivedAt ? (d.receivedAt | date:'medium') : '—' }}
+                    <span class="mx-2 text-slate-300">•</span>
+                    Resultado: {{ d.verifiedResult || '—' }}
+                  </div>
+                </div>
+
+                <button
+                  class="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white/85 px-3 text-sm font-extrabold text-slate-800 shadow-sm transition hover:bg-white disabled:opacity-60"
+                  type="button"
+                  (click)="openDoc(d)"
+                  [disabled]="d.hasFile === false"
+                >
+                  {{ d.hasFile === false ? 'Sin archivo' : 'Abrir' }}
+                </button>
+              </div>
+            </div>
+
+            <ng-template #noDocsTpl>
+              <div class="mt-3 text-sm font-semibold text-slate-600">No hay documentos registrados.</div>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+      </section>
+
+      <!-- Notes + actions -->
+      <section class="mt-4 rounded-2xl border border-[rgba(15,23,42,0.10)] bg-white/70 p-5 backdrop-blur shadow-sm">
+        <h2 class="text-sm font-extrabold text-slate-900">Notas del admin</h2>
+
+        <textarea
+          class="mt-3 min-h-[160px] w-full resize-y rounded-xl border border-slate-200 bg-white/85 px-3 py-3 text-sm text-slate-900 shadow-sm outline-none
+                 transition focus:border-[rgba(255,27,45,0.35)] focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+          rows="6"
+          [(ngModel)]="notes"
+          placeholder="Escribe una nota para el usuario (opcional)…"
+        ></textarea>
+
+        <div class="mt-4 flex flex-wrap justify-end gap-2">
+          <button
+            class="inline-flex h-11 items-center justify-center rounded-xl border border-slate-200 bg-white/85 px-4 text-sm font-extrabold text-slate-800 shadow-sm transition hover:bg-white"
+            type="button"
+            (click)="back()"
+          >
+            Volver
+          </button>
+
+          <button
+            class="inline-flex h-11 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-4 text-sm font-extrabold text-emerald-700 shadow-sm transition hover:bg-emerald-100 disabled:opacity-60"
+            type="button"
+            (click)="decide('APPROVE')"
+            [disabled]="busy"
+          >
+            {{ busy ? 'Procesando…' : 'Aprobar' }}
+          </button>
+
+          <button
+            class="inline-flex h-11 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-4 text-sm font-extrabold text-rose-700 shadow-sm transition hover:bg-rose-100 disabled:opacity-60"
+            type="button"
+            (click)="decide('REJECT')"
+            [disabled]="busy"
+          >
+            {{ busy ? 'Procesando…' : 'Rechazar' }}
+          </button>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-8 text-center text-xs font-semibold text-slate-500">
+        © {{ currentYear }} SIPH • Admin Detalle
+      </footer>
+    </ng-container>
+  </section>
+</main>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-
-import { StorageService } from './storage.service';
+import { environment } from '../../../environments/environment';
+import { StorageService, AuthUser } from './storage.service';
 
 export interface RegisterPayload {
   first_name: string;
@@ -16,73 +16,63 @@ export interface LoginPayload {
   password: string;
 }
 
-<<<<<<< HEAD
 export interface GoogleLoginPayload {
-  credential: string; // ID token de Google (GIS)
+  credential: string;
 }
 
-=======
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 export interface AuthResponse {
   access_token: string;
-  token_type: string;
+  token_type?: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  // 🔧 Ajusta esto a tu backend real
-  private baseUrl = 'http://localhost:8000';
+  private readonly baseUrl = environment.apiUrl || 'http://localhost:8000';
 
-<<<<<<< HEAD
   constructor(private http: HttpClient, private storage: StorageService) {}
 
   register(payload: RegisterPayload): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.baseUrl}/auth/register`, payload)
       .pipe(
-        tap((response) => {
-          this.storage.saveToken(response.access_token);
+        tap((res) => {
+          this.storage.saveToken(res.access_token);
+          // Carga user para navbar/roles
+          this.me().subscribe({ next: () => {}, error: () => {} });
         })
       );
-=======
-  constructor(
-    private http: HttpClient,
-    private storage: StorageService
-  ) {}
-
-  register(payload: RegisterPayload): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, payload).pipe(
-      tap((response) => {
-        this.storage.saveToken(response.access_token);
-      })
-    );
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
   }
 
   login(payload: LoginPayload): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, payload).pipe(
-      tap((response) => {
-        this.storage.saveToken(response.access_token);
+      tap((res) => {
+        this.storage.saveToken(res.access_token);
+        this.me().subscribe({ next: () => {}, error: () => {} });
       })
     );
   }
-<<<<<<< HEAD
 
   loginWithGoogle(credential: string): Observable<AuthResponse> {
     const payload: GoogleLoginPayload = { credential };
+    return this.http
+      .post<AuthResponse>(`${this.baseUrl}/auth/google`, payload)
+      .pipe(
+        tap((res) => {
+          this.storage.saveToken(res.access_token);
+          this.me().subscribe({ next: () => {}, error: () => {} });
+        })
+      );
+  }
 
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/google`, payload).pipe(
-      tap((response) => {
-        this.storage.saveToken(response.access_token);
+  me(): Observable<AuthUser> {
+    return this.http.get<AuthUser>(`${this.baseUrl}/auth/me`).pipe(
+      tap((user) => {
+        this.storage.saveUser(user);
       })
     );
   }
 
   logout(): void {
-    this.storage.removeToken();
+    this.storage.clearToken();
   }
-=======
->>>>>>> 41e108c54a0b218a81a714f45c32115e8c091ed7
 }

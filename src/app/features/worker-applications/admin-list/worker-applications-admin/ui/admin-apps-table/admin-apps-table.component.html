@@ -1,0 +1,186 @@
+<section
+  class="mt-4 overflow-hidden rounded-2xl border border-[rgba(15,23,42,0.10)]
+         bg-white/70 backdrop-blur-xl shadow-[0_30px_90px_rgba(2,6,23,0.10)]"
+>
+  <ng-container *ngIf="viewApps.length === 0 && !loading; else tableTpl">
+    <div class="grid place-items-center px-6 py-16">
+      <div class="max-w-md text-center">
+        <div
+          class="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl border border-slate-200 bg-white/80 text-2xl
+                 shadow-[0_18px_60px_rgba(2,6,23,0.08)]"
+        >
+          🧰
+        </div>
+        <h3 class="text-lg font-extrabold text-slate-900">No hay solicitudes</h3>
+        <p class="mt-1 text-sm font-semibold text-slate-600">Prueba cambiando filtros o búsqueda.</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #tableTpl>
+    <div class="overflow-auto">
+      <table class="min-w-[1050px] w-full border-separate border-spacing-0">
+        <thead class="sticky top-0 z-10 bg-white/80 backdrop-blur">
+          <tr>
+            <th class="w-[52px] border-b border-slate-200 px-4 py-3">
+              <input
+                type="checkbox"
+                class="h-4 w-4 rounded border-slate-300 text-[color:var(--accent2)]
+                       focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+                [checked]="isAllSelected"
+                (click)="$event.stopPropagation()"
+             (change)="onSelectAll($event)"
+
+                aria-label="Seleccionar todo"
+              />
+            </th>
+
+            <th class="border-b border-slate-200 px-4 py-3 text-left text-xs font-extrabold text-slate-600">Usuario</th>
+            <th class="border-b border-slate-200 px-4 py-3 text-left text-xs font-extrabold text-slate-600">Perfil</th>
+            <th class="border-b border-slate-200 px-4 py-3 text-left text-xs font-extrabold text-slate-600">Estado</th>
+            <th class="border-b border-slate-200 px-4 py-3 text-left text-xs font-extrabold text-slate-600">Notas</th>
+            <th class="border-b border-slate-200 px-4 py-3 text-right text-xs font-extrabold text-slate-600 w-[320px]">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let app of viewApps; trackBy: trackById"
+            class="cursor-pointer transition hover:bg-white/60"
+            (click)="openDetail.emit(app)"
+            tabindex="0"
+            (keydown.enter)="openDetail.emit(app)"
+            (keydown.space)="openDetail.emit(app)"
+          >
+            <!-- Select -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top" (click)="$event.stopPropagation()">
+              <input
+                type="checkbox"
+                class="h-4 w-4 rounded border-slate-300 text-[color:var(--accent2)]
+                       focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+                [checked]="isSelected(app.id)"
+           (change)="onRowCheck(app.id, $event)"
+
+                aria-label="Seleccionar fila"
+              />
+            </td>
+
+            <!-- Usuario -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top">
+              <div class="flex items-center gap-3">
+                <div
+                  class="grid h-11 w-11 place-items-center rounded-2xl text-sm font-extrabold text-[#7a0015]
+                         border border-[rgba(255,27,45,0.20)]
+                         bg-[radial-gradient(circle_at_30%_30%,rgba(255,27,45,0.22),rgba(184,0,31,0.10))]
+                         shadow-[0_18px_45px_rgba(255,27,45,0.12)]"
+                >
+                  {{ userName(app).slice(0, 1) }}
+                </div>
+
+                <div class="min-w-0">
+                  <div class="truncate text-sm font-extrabold text-slate-900">{{ userName(app) }}</div>
+
+                  <div class="flex items-center gap-2 truncate text-xs font-semibold text-slate-500">
+                    <span class="truncate">{{ app.user?.email || '—' }}</span>
+
+                    <button
+                      type="button"
+                      class="shrink-0 rounded-lg px-2 py-1 text-[11px] font-extrabold text-[#7a0015]
+                             hover:bg-[rgba(255,27,45,0.08)]"
+                      (click)="$event.stopPropagation(); copyEmail.emit(app.user?.email || '')"
+                      [disabled]="!app.user?.email"
+                      title="Copiar email"
+                    >
+                      Copiar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <!-- Perfil -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top">
+              <div class="space-y-1">
+                <div class="text-sm font-extrabold text-slate-900">{{ app.specialty || '—' }}</div>
+                <div class="text-xs font-semibold text-slate-500">
+                  {{ app.city || 'Ciudad no indicada' }}
+                  <span class="mx-2 text-slate-300">•</span>
+                  {{ (app.years_experience ?? 0) + ' años' }}
+                </div>
+                <div class="text-xs font-semibold leading-relaxed text-slate-600" [title]="app.bio || ''">
+                  {{ (app.bio || 'Sin descripción.') | slice:0:110 }}{{ (app.bio?.length || 0) > 110 ? '…' : '' }}
+                </div>
+              </div>
+            </td>
+
+            <!-- Estado -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top">
+              <div [ngClass]="badgeClass(app.status)">
+                <span class="h-2 w-2 rounded-full bg-current opacity-80"></span>
+                {{ badgeText(app.status) }}
+              </div>
+              <div class="mt-2 text-xs font-semibold text-slate-500">
+                Actualizado:
+                <span class="font-extrabold text-slate-700">{{ app.updated_at | date:'medium' }}</span>
+              </div>
+            </td>
+
+            <!-- Notas -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top" (click)="$event.stopPropagation()">
+              <textarea
+                class="min-h-[92px] w-full resize-y rounded-xl border border-slate-200 bg-white/85 px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none
+                       transition focus:border-[rgba(255,27,45,0.35)] focus:ring-4 focus:ring-[rgba(255,27,45,0.18)]"
+                rows="3"
+                [name]="'notes_' + app.id"
+                [(ngModel)]="notesById[app.id]"
+                placeholder="Nota (opcional)…"
+                (click)="$event.stopPropagation()"
+              ></textarea>
+            </td>
+
+            <!-- Acciones -->
+            <td class="border-b border-slate-100 px-4 py-4 align-top" (click)="$event.stopPropagation()">
+              <div class="flex flex-wrap justify-end gap-2">
+                <button
+                  class="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white/85 px-3 text-sm font-extrabold text-slate-800 shadow-sm transition hover:bg-white"
+                  type="button"
+                  (click)="openDetail.emit(app)"
+                  [disabled]="loading"
+                >
+                  Ver
+                </button>
+
+                <button
+                  class="inline-flex h-10 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 px-3 text-sm font-extrabold text-emerald-700 shadow-sm transition hover:bg-emerald-100 disabled:opacity-60"
+                  type="button"
+                  (click)="decide.emit({ app, decision: 'APPROVE' })"
+                  [disabled]="busyById[app.id] || loading"
+                >
+                  {{ busyById[app.id] ? 'Procesando…' : 'Aprobar' }}
+                </button>
+
+                <button
+                  class="inline-flex h-10 items-center justify-center rounded-xl border border-rose-200 bg-rose-50 px-3 text-sm font-extrabold text-rose-700 shadow-sm transition hover:bg-rose-100 disabled:opacity-60"
+                  type="button"
+                  (click)="decide.emit({ app, decision: 'REJECT' })"
+                  [disabled]="busyById[app.id] || loading"
+                >
+                  {{ busyById[app.id] ? 'Procesando…' : 'Rechazar' }}
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex items-center justify-between gap-3 border-t border-slate-200 px-4 py-3">
+      <p class="text-xs font-semibold text-slate-500">
+        Tip: click en la fila o en <span class="font-extrabold text-slate-700">Ver</span> para ver el detalle (pantalla completa).
+      </p>
+      <p class="text-xs font-semibold text-slate-500">
+        Mostrando: <span class="font-extrabold text-slate-700">{{ viewApps.length }}</span>
+      </p>
+    </div>
+  </ng-template>
+</section>

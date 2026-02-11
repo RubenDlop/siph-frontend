@@ -1,3 +1,4 @@
+# backend/app/schemas/request.py
 from pydantic import BaseModel, Field
 
 
@@ -9,7 +10,6 @@ class ServiceRequestCreate(BaseModel):
 class ServiceRequestOut(BaseModel):
     id: int
     title: str
-    description: str
     status: str
 
     class Config:
