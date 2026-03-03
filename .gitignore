@@ -26,3 +26,9 @@ backend/.env
 .DS_Store
 .idea/
 .vscode/
+# Python cache
+__pycache__/
+*.pyc
+
+# Uploads / files storage
+backend/uploads/
